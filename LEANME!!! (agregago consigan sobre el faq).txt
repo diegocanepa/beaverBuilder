@@ -1,0 +1,27 @@
+---Cosas por hacer en el Home---
+
+1. agregar el icono de un carrito que esta ya guardado en la carpeta resources
+2. cuando se achica la resolucion en el boton dropdown del menu desaparece el login y el registro hay que arreglar eso
+3. arreglar los mediaQueris de el timeline que queda grande cuando se ve la resolucion mas chica
+4. terminar el footeer (en el footer por ahi meter un link para preguntas frecuentes FAQ)
+5. linkear las cosas del menu para que redireccionen de manera correcta
+6. tambien cuando se achica la resolucion las imagenes del camion el carrito y esas huevadas quedan medio grande habria que agregarle unos mediaQ para qe queden piola
+7. hacer una funcion php para reutilizar el header el nav y el footer cuando este listo.
+
+--Formulario de registro--
+
+--FAQ--
+
+estaria bueno hacer como en esta pagina https://www.tiendanube.com/preguntas-frecuentes
+
+--Carrito de compras--
+
+--Ventana login--
+
+--Ventana perfil de usuario--
+
+--Catalogo de productos--
+
+--Detalle de productos--
+
+--Preguntas frecuentes--
