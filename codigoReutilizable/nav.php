@@ -3,7 +3,7 @@ require_once("./codigoReutilizable/funciones.php");
 require_once("./codigoReutilizable/funcionesCarrito.php");
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="navbar-respon">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fadeInDown" id="navbar-respon">
     <a class="navbar-brand" href="home.php" id="navbar-brand">Beaver Builder</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
