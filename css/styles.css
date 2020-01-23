@@ -898,3 +898,12 @@ table {
   padding: 5%;
   padding-top: 0px;
 }
+
+.contenedorDescripcion{
+  margin-left: 200px;
+}
+
+
+.filasABMProductos{
+  padding: 0px;
+}
