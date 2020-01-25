@@ -907,3 +907,8 @@ table {
 .filasABMProductos{
   padding: 0px;
 }
+
+.imagenTabla-abm{
+    height: 25px;
+    width: 25px;
+}

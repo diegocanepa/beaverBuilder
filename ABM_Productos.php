@@ -1,4 +1,27 @@
 <!DOCTYPE html>
+
+<?php
+  $bool = false;
+  var_dump($_GET);
+  if (count($_GET) != 0) {
+    var_dump($_GET);
+    echo $_GET["bool"];
+    $bool = $_GET["bool"];
+  }
+
+
+
+  function consultaProductos($baseDeDatos) {
+    $consulta = $baseDeDatos->prepare("SELECT * FROM producto");
+    $consulta->execute();
+    return $consulta->fetchAll();
+  }
+
+  require_once('conexionBD/pdo.php');
+  var_dump(consultaProductos($baseDeDatos));
+
+?>
+
 <html lang="en" dir="ltr">
   <?php require_once('codigoReutilizable/head.php'); ?>
   <body class="body-abmProductos">
@@ -7,17 +30,8 @@
       <div class="container abmProductos">
 
 
-        <nav>
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Alta</a>
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Baja</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Modificacion</a>
-          </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
+          <!-- OPCION ALTA DE PRODUCTO
 
-          <!-- OPCION ALTA DE PRODUCTO -->
-          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="row">
               <div class="col-lg-12">
                 <h1 class="text-center pb-4">Nuevo Producto</h1>
@@ -75,20 +89,12 @@
 
                 </form>
               </div>
-            </div>
+              -->
 
-
-
-
-
-
-
-          <!-- OPCION BAJA DE PRODUCTO -->
-          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <div class="row">
               <div class="col-lg-12">
                 <h1 class="text-center pb-4">ABM Productos</h1>
-                <form action="ABM_Productos.php">
+                <form action="ABM_Productos.php?bool=true" method="post">
                   <div class="form-group row">
                     <label for="codigoProducto" class="col-sm-2 col-form-label">Codigo:</label>
                     <div class="col-sm-10">
@@ -119,108 +125,37 @@
                 </form>
               </div>
             </div>
-
-            <div class="row">
-              <table class="table table-hover" width="100%">
-                <tbody>
-                  <thead>
-                    <tr>
-                      <th  class="columnasABMProductos" scope="col">Eliminar</th>
-                      <th  class="columnasABMProductos" scope="col">Modificar</th>
-                      <th  class="columnasABMProductos" scope="col">Codigo</th>
-                      <th  class="columnasABMProductos" scope="col">Nombre</th>
-                      <th  class="columnasABMProductos" scope="col">Categoria</th>
-                      <th  class="columnasABMProductos" scope="col">Precio</th>
+            <?php if ($bool): ?>
+              <div class="row pt-3">
+                <table class="table table-hover" width="100%">
+                  <tbody>
+                    <thead>
+                      <tr>
+                        <th  class="columnasABMProductos" scope="col"></th>
+                        <th  class="columnasABMProductos" scope="col"></th>
+                        <th  class="columnasABMProductos" scope="col">Codigo</th>
+                        <th  class="columnasABMProductos" scope="col">Nombre</th>
+                        <th  class="columnasABMProductos" scope="col">Categoria</th>
+                        <th  class="columnasABMProductos" scope="col">Precio</th>
+                      </tr>
+                    </thead>
+                      <tr>
+                        <td class="filasABMProductos text-center pl-0 pr-0">
+                          <img class= "imagenTabla-abm" src="resources/eliminar.png" alt="">
+                        </td>
+                        <td class="filasABMProductos text-center pl-0 pr-0">
+                          <img class= "imagenTabla-abm" src="resources/modificar.png" alt="">
+                        </td>
+                        <td class="filasABMProductos"></td>
+                        <td class="filasABMProductos"></td>
+                        <td class="filasABMProductos"></td>
+                        <td class="filasABMProductos"></td>
+                      </tr><tr>
                     </tr>
-                  </thead>
-                    <tr>
-                      <td class="filasABMProductos text-center">
-                        <input class="" type="checkbox" id="gridCheck1">
-                      </td>
-                      <td class="filasABMProductos"></td>
-                      <td class="filasABMProductos"></td>
-                      <td class="filasABMProductos"></td>
-                      <td class="filasABMProductos"></td>
-                    </tr><tr>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-          </div>
-
-
-
-
-
-
-          <!-- OPCION MODIFICACION DE PRODUCTO -->
-          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-            <div class="row">
-              <div class="col-lg-12">
-                <h1 class="text-center pb-4">ABM Productos</h1>
-                <form action="ABM_Productos.php">
-                  <div class="form-group row">
-                    <label for="codigoProducto" class="col-sm-2 col-form-label">Codigo:</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" id="codigoProducto">
-                      <small id="emailHelp" class="form-text text-muted">Tambien se buscara los codigos similares</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="nombreProducto" class="col-sm-2 col-form-label">Nombre:</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" id="nombreProducto" aria-describedby="emailHelp" placeholder="Ingrese el nombre del producto">
-                      <small id="emailHelp" class="form-text text-muted">Tambien se buscara los nombre similares</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="precioDesde" class="col-sm-2 col-form-label">Precio Desde:</label>
-                    <div class="col-sm-3">
-                      <input type="number" class="form-control form-control-sm" id="precioDesde" aria-describedby="emailHelp" placeholder="Ingrese precio desde">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="precioDesde" class="col-sm-2 col-form-label">Precio Hasta:</label>
-                    <div class="col-sm-3">
-                      <input type="number" class="form-control form-control-sm" id="precioDesde" aria-describedby="emailHelp" placeholder="Ingrese precio hasta">
-                    </div>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Buscar</button>
-                </form>
+                  </tbody>
+                </table>
               </div>
-            </div>
-
-            <div class="row">
-              <table class="table table-hover" width="100%">
-                <tbody>
-                  <thead>
-                    <tr>
-                      <th  class="columnas" scope="col">Eliminar</th>
-                      <th  class="columnas" scope="col">Modificar</th>
-                      <th  class="columnas" scope="col">Codigo</th>
-                      <th  class="columnas" scope="col">Nombre</th>
-                      <th  class="columnas" scope="col">Categoria</th>
-                      <th  class="columnas" scope="col">Precio</th>
-                    </tr>
-                  </thead>
-                    <tr>
-                      <td class="filas">
-                        <input class="form-check-input checkboxTable" type="checkbox" id="gridCheck1">
-                      </td>
-                      <td class="filas"></td>
-                      <td class="filas"></td>
-                      <td class="filas"></td>
-                      <td class="filas"></td>
-                    </tr><tr>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-        </div>
-      </div>
-    </div>
+            <?php endif; ?>
 
 
     </section>
