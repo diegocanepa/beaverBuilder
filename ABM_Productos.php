@@ -2,25 +2,56 @@
 
 <?php
   $bool = false;
-  var_dump($_GET);
   if (count($_GET) != 0) {
-    var_dump($_GET);
-    echo $_GET["bool"];
-    $bool = $_GET["bool"];
+    if (isset($_GET["bool"])) {
+      $bool = $_GET["bool"];
+    }
+
+    if (isset($_GET["codigoProducto"])) {
+      $vector = [];
+      var_dump($datosConsulta);
+      if (isset($datosConsulta)) {
+        foreach ($datosConsulta as $key => $value) {
+          if ($value["codigoProducto"] != $_GET["codigoProducto"]) {
+            $vector[] = $value;
+          }
+        }
+      }
+      //vacio la variable session para luego meterle el array. Si no se vaciara, no funciona correctamente cuando eliminamos el ultimo producto del carrito
+      $datosConsulta = [];
+      //Se le asigna a la variable  $datosConsulta el $vector, el cual puede estar vacio o no
+      $datosConsulta = $vector;
+    }
+
+
+    }
+
+
+  if (count($_POST) != 0 ) {
+    require_once('codigoReutilizable/funcionesABMProductos.php');
+    $consulta  = generarConsultaProductos($_POST);
+    $datosConsulta= realizarConsultaProductos($consulta, $_POST);
   }
-
-
-
-  function consultaProductos($baseDeDatos) {
-    $consulta = $baseDeDatos->prepare("SELECT * FROM producto");
-    $consulta->execute();
-    return $consulta->fetchAll();
-  }
-
-  require_once('conexionBD/pdo.php');
-  var_dump(consultaProductos($baseDeDatos));
 
 ?>
+
+
+<script>
+    $(function(){
+        $(".botonEliminar").click(function(){
+
+            var valores="";
+
+            // Obtenemos todos los valores contenidos en los <td> de la fila
+            // seleccionada
+            $(this).parents("tr").find("td").each(function(){
+                valores+=$(this).html()+"\n";
+            });
+            alert(valores);
+            $(".mostrarvalores").html(valores);
+        });
+    });
+</script>
 
 <html lang="en" dir="ltr">
   <?php require_once('codigoReutilizable/head.php'); ?>
@@ -94,31 +125,34 @@
             <div class="row">
               <div class="col-lg-12">
                 <h1 class="text-center pb-4">ABM Productos</h1>
+                <div class="mostrarvalores">
+
+                </div>
                 <form action="ABM_Productos.php?bool=true" method="post">
                   <div class="form-group row">
                     <label for="codigoProducto" class="col-sm-2 col-form-label">Codigo:</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" id="codigoProducto">
+                      <input type="text" class="form-control form-control-sm" id="codigoProducto" name="codigoProducto">
                       <small id="emailHelp" class="form-text text-muted">Tambien se buscara los codigos similares</small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="nombreProducto" class="col-sm-2 col-form-label">Nombre:</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" id="nombreProducto" aria-describedby="emailHelp" placeholder="Ingrese el nombre del producto">
+                      <input type="text" class="form-control form-control-sm" name="nombreProducto" id="nombreProducto" aria-describedby="emailHelp" placeholder="Ingrese el nombre del producto">
                       <small id="emailHelp" class="form-text text-muted">Tambien se buscara los nombre similares</small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="precioDesde" class="col-sm-2 col-form-label">Precio Desde:</label>
                     <div class="col-sm-3">
-                      <input type="number" class="form-control form-control-sm" id="precioDesde" aria-describedby="emailHelp" placeholder="Ingrese precio desde">
+                      <input type="number" class="form-control form-control-sm" name="precioDesde" id="precioDesde" aria-describedby="emailHelp" placeholder="Ingrese precio desde">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="precioDesde" class="col-sm-2 col-form-label">Precio Hasta:</label>
+                    <label for="precioHasta" class="col-sm-2 col-form-label">Precio Hasta:</label>
                     <div class="col-sm-3">
-                      <input type="number" class="form-control form-control-sm" id="precioDesde" aria-describedby="emailHelp" placeholder="Ingrese precio hasta">
+                      <input type="number" class="form-control form-control-sm" name="precioHasta" id="precioHasta" aria-describedby="emailHelp" placeholder="Ingrese precio hasta">
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Buscar</button>
@@ -136,22 +170,58 @@
                         <th  class="columnasABMProductos" scope="col">Codigo</th>
                         <th  class="columnasABMProductos" scope="col">Nombre</th>
                         <th  class="columnasABMProductos" scope="col">Categoria</th>
+                        <th  class="columnasABMProductos" scope="col">Marca</th>
                         <th  class="columnasABMProductos" scope="col">Precio</th>
                       </tr>
                     </thead>
+                    <?php foreach ($datosConsulta as $key => $value): ?>
                       <tr>
                         <td class="filasABMProductos text-center pl-0 pr-0">
-                          <img class= "imagenTabla-abm" src="resources/eliminar.png" alt="">
+                          <!-- Button trigger modal -->
+                          <button class="botonEliminar" type="button" name="button"></button>
+                          <input class="botonEliminar" type="image" src="resources/eliminar.png" name="" value="echo $value["codigo"]"  data-toggle="modal" data-target="#exampleModal">
+
+                          <!-- Modal -->
+                          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Importante!</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  ¿Esta seguro que desea eliminar este producto por completo de la base de datos? <?php echo $value["codigo"]; ?>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                  <a href="ABM_Productos.php?codigoProducto=<?php echo $value["codigo"]; ?>"><button type="button" class="btn btn-primary">Aceptar</button></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                         <td class="filasABMProductos text-center pl-0 pr-0">
-                          <img class= "imagenTabla-abm" src="resources/modificar.png" alt="">
+                          <a href=""><img class= "imagenTabla-abm" src="resources/modificar.png" alt=""></a>
                         </td>
-                        <td class="filasABMProductos"></td>
-                        <td class="filasABMProductos"></td>
-                        <td class="filasABMProductos"></td>
-                        <td class="filasABMProductos"></td>
-                      </tr><tr>
-                    </tr>
+                        <td class="filasABMProductos">
+                          <?php echo $value["codigo"]; ?>
+                        </td>
+                        <td class="filasABMProductos">
+                          <?php echo $value["nombre"]; ?>
+                        </td>
+                        <td class="filasABMProductos">
+                          <?php echo $value["categoria"]; ?>
+                        </td>
+                        <td class="filasABMProductos">
+                          <?php echo $value["marca"]; ?>
+                        </td>
+                        <td class="filasABMProductos">
+                          <?php echo $value["precio"]; ?>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
                   </tbody>
                 </table>
               </div>
