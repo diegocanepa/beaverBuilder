@@ -66,8 +66,8 @@
 
   function eliminarProducto($codProducto){
     include("./conexionBD/pdo.php");
-    $consulta = $baseDeDatos->prepare("DELETE FROM productos WHERE codigo= :codigo");
-    $consulta->bindValue(":codigo", $codProducto);
-    $consulta->execute();
+    $sql = "DELETE FROM `productos` WHERE codigo = '". $codProducto ."';";
+    echo $sql;
+    $baseDeDatos->exec($sql);
   }
  ?>

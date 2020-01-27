@@ -29,29 +29,21 @@
 
   if (count($_POST) != 0 ) {
     require_once('codigoReutilizable/funcionesABMProductos.php');
-    $consulta  = generarConsultaProductos($_POST);
-    $datosConsulta= realizarConsultaProductos($consulta, $_POST);
+
+    if (isset($_POST["codProdEliminacion"])) {
+      echo $_POST["codProdEliminacion"];
+      eliminarProducto($_POST["codProdEliminacion"]);
+      echo "se elimino wuacho";
+    }else {
+      $consulta  = generarConsultaProductos($_POST);
+      $datosConsulta= realizarConsultaProductos($consulta, $_POST);
+    }
   }
 
 ?>
 
 
-<script>
-    $(function(){
-        $(".botonEliminar").click(function(){
 
-            var valores="";
-
-            // Obtenemos todos los valores contenidos en los <td> de la fila
-            // seleccionada
-            $(this).parents("tr").find("td").each(function(){
-                valores+=$(this).html()+"\n";
-            });
-            alert(valores);
-            $(".mostrarvalores").html(valores);
-        });
-    });
-</script>
 
 <html lang="en" dir="ltr">
   <?php require_once('codigoReutilizable/head.php'); ?>
@@ -125,9 +117,6 @@
             <div class="row">
               <div class="col-lg-12">
                 <h1 class="text-center pb-4">ABM Productos</h1>
-                <div class="mostrarvalores">
-
-                </div>
                 <form action="ABM_Productos.php?bool=true" method="post">
                   <div class="form-group row">
                     <label for="codigoProducto" class="col-sm-2 col-form-label">Codigo:</label>
@@ -167,7 +156,7 @@
                       <tr>
                         <th  class="columnasABMProductos" scope="col"></th>
                         <th  class="columnasABMProductos" scope="col"></th>
-                        <th  class="columnasABMProductos" scope="col">Codigo</th>
+                        <th  class="columnasABMProductos" id="numero" scope="col">Codigo</th>
                         <th  class="columnasABMProductos" scope="col">Nombre</th>
                         <th  class="columnasABMProductos" scope="col">Categoria</th>
                         <th  class="columnasABMProductos" scope="col">Marca</th>
@@ -178,8 +167,9 @@
                       <tr>
                         <td class="filasABMProductos text-center pl-0 pr-0">
                           <!-- Button trigger modal -->
-                          <button class="botonEliminar" type="button" name="button"></button>
-                          <input class="botonEliminar" type="image" src="resources/eliminar.png" name="" value="echo $value["codigo"]"  data-toggle="modal" data-target="#exampleModal">
+                          <?php $miVariable = "hola mundo" ?>
+                          <input class="botonEliminar" type="image" src="resources/eliminar.png" name=""  data-toggle="modal" data-target="#exampleModal">
+
 
                           <!-- Modal -->
                           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -191,13 +181,15 @@
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
-                                <div class="modal-body">
-                                  ¿Esta seguro que desea eliminar este producto por completo de la base de datos? <?php echo $value["codigo"]; ?>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                  <a href="ABM_Productos.php?codigoProducto=<?php echo $value["codigo"]; ?>"><button type="button" class="btn btn-primary">Aceptar</button></a>
-                                </div>
+                                ¿Esta seguro que desea eliminar este producto por completo de la base de datos?
+                                <div class="mostrarvalores"></div>
+                                <form action="ABM_Productos.php" method="POST">
+                                  <input type="hidden" name="codProdEliminacion" id="caja_valor" value="">
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                                  </div>
+                                </form>
                               </div>
                             </div>
                           </div>
@@ -235,4 +227,27 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
+
+  <script>
+      $(function(){
+          $(".botonEliminar").click(function(){
+
+              var valores="";
+
+              // Obtenemos todos los valores contenidos en los <td> de la fila
+              // seleccionada
+              $(this).parents("tr").find("td:nth-child(3)").each(function(){
+                  valores+=$(this).html()+"\n";
+              });
+              $(".mostrarvalores").html(valores);
+              let valor = valores;
+              document.getElementById("caja_valor").value = valor;
+
+          });
+      });
+  </script>
+
+  <script>
+
+  </script>
 </html>
