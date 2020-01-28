@@ -37,7 +37,7 @@ require_once("codigoReutilizable/productos.php");
     <?php require_once("codigoReutilizable/nav.php") ?>
       <section class="jumbotron text-center">
           <div class="container">
-              <h1>Productos<?php echo($_SESSION["id-email"]); var_dump($_SESSION)?></h1>
+              <h1>Productos</h1>
               <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
           </div>
       </section>

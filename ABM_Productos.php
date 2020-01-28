@@ -116,12 +116,13 @@
 
             <div class="row">
               <div class="col-lg-12">
+
                 <h1 class="text-center pb-4">ABM Productos</h1>
                 <form action="ABM_Productos.php?bool=true" method="post">
                   <div class="form-group row">
                     <label for="codigoProducto" class="col-sm-2 col-form-label">Codigo:</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" id="codigoProducto" name="codigoProducto">
+                      <input type="text" class="form-control form-control-sm" id="codigoProducto" name="codigoProducto" placeholder="Ingrese el codigo del producto">
                       <small id="emailHelp" class="form-text text-muted">Tambien se buscara los codigos similares</small>
                     </div>
                   </div>
@@ -145,7 +146,13 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Buscar</button>
+
+                  <button type="button" class="btn btn-primary">Agregar nuevo producto</button>
+
+                  
+
                 </form>
+
               </div>
             </div>
             <?php if ($bool): ?>
@@ -167,7 +174,6 @@
                       <tr>
                         <td class="filasABMProductos text-center pl-0 pr-0">
                           <!-- Button trigger modal -->
-                          <?php $miVariable = "hola mundo" ?>
                           <input class="botonEliminar" type="image" src="resources/eliminar.png" name=""  data-toggle="modal" data-target="#exampleModal">
 
 
@@ -195,7 +201,79 @@
                           </div>
                         </td>
                         <td class="filasABMProductos text-center pl-0 pr-0">
-                          <a href=""><img class= "imagenTabla-abm" src="resources/modificar.png" alt=""></a>
+                          <!-- Button trigger modal -->
+                          <input class="botonModificar" type="image" src="resources/modificar.png" name=""  data-toggle="modal" data-target=".bd-example-modal-lg">
+
+                          <!-- Large modal -->
+
+                          <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Modificar Producto</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <form class="p-4" action="ABM_Productos.php">
+                                  <?php
+
+
+                                   ?>
+                                  <div class="form-row">
+                                      <div class="form-group col-md-6">
+                                        <label for="codigoProducto">Codigo</label>
+                                        <input type="text" class="form-control form-control-sm" id="codigoProducto" value="<?php echo $value["codigo"]; ?>" required>
+                                        <small id="emailHelp" class="form-text text-muted">Ingrese el codigo del Producto</small>
+                                      </div>
+                                      <div class="form-group col-md-6">
+                                        <label for="nombreProducto">Nombre</label>
+                                        <input type="text" class="form-control form-control-sm" id="nombreProducto" value="<?php echo $value["nombre"]; ?>"required>
+                                        <small id="emailHelp" class="form-text text-muted">Ingrese el nombre del Producto</small>
+                                      </div>
+                                  </div>
+                                  <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="precio">Precio</label>
+                                        <input type="number" class="form-control form-control-sm" id="precio" value="<?php echo $value["precio"]; ?>" required>
+                                        <br>
+                                        <label for="Categoria">Categoria</label>
+                                        <select class="custom-select input-sm" id="Categoria" required>
+                                            <option selected><?php echo $value["categoria"]; ?></option>
+                                            <option value="1">Venatana</option>
+                                            <option value="2">Puerta</option>
+                                            <option value="3">Alfombra</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <label for="marca">Marca</label>
+                                        <select class="custom-select input-sm" id="marca" required>
+                                            <option selected><?php echo $value["marca"]; ?></option>
+                                            <option value="1">Riot</option>
+                                            <option value="2">Alma</option>
+                                            <option value="3">Easy</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                      <div class="mb-3">
+                                          <label for="DescripcionLarga">Descripcion</label>
+                                          <textarea rows="8" class="form-control form-control-sm" id="DescripcionLarga" placeholder="Descripcion Requerida" required
+                ><?php echo $value["descripcion"]; ?></textarea>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                                  </div>
+                                </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                         <td class="filasABMProductos">
                           <?php echo $value["codigo"]; ?>
@@ -209,8 +287,8 @@
                         <td class="filasABMProductos">
                           <?php echo $value["marca"]; ?>
                         </td>
-                        <td class="filasABMProductos">
-                          <?php echo $value["precio"]; ?>
+                        <td class="filasABMProductos text-left">
+                          <?php echo "$".$value["precio"]; ?>
                         </td>
                       </tr>
                     <?php endforeach; ?>
@@ -248,6 +326,25 @@
   </script>
 
   <script>
+      $(function(){
+          $(".botonModificar").click(function(){
 
+              var valores="";
+
+              // Obtenemos todos los valores contenidos en los <td> de la fila
+              // seleccionada
+              $(this).parents("tr").find("td:nth-child(3)").each(function(){
+                  valores+=$(this).html()+"\n";
+              });
+              $(".mostrarvalores").html(valores);
+              let valor = valores;
+              document.getElementById("caja_valor").value = valor;
+
+          });
+      });
   </script>
+
+
+
+
 </html>
