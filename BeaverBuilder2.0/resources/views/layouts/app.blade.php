@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <title>Beaver Builders - Materiales de construccion</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+    <link href="/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/animation.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="icon" href=" https://assets.jumpseller.com/store/bootstrap/themes/215975/favicon.png?1571644467 ">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fadeInDown" id="navbar-respon">
+      <a class="navbar-brand" href="{{ route('login') }}" id="navbar-brand">Beaver Builder</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" id="nav-li" href="{{ route('productos') }}">Productos</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="nav-li" href="home.php#about-services">Nosotros</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="nav-li" href="home.php#footer-section">Contactanos</a>
+                  </li>
+              </ul>
+              <div class="form-inline my-2 my-lg-0" id="end">
+                  <div class="menu-derecha" id="menu-derecha">
+                      <li class="nav-item">
+                          <a class="nav-link" id="nav-li" href="{{ route('login') }}">Login</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" id="nav-li" href="{{ route('register') }}">Registrarse</a>
+                      </li>
+                      <li class="nav-item">
+                            <a class="nav-link" id="nav-li-carrito" href="carrito.php"><img id="carrito-compras-img" src="resources/carrito-compras2.png" alt=""><span class="am-badge badge-pill badge-primary"></span></a>
+                      </li>
+                      <li class="nav-item">
+                            <a class="nav-link" id="nav-li-carrito" href=""><img id="carrito-compras-img" src="resources/carrito-compras2.png" alt=""></a>
+                      </li>
+                  </div>
+              </div>
+      </div>
+</nav>
+
+<main>
+  @yield('content')
+</main>
+<footer id="footer-section">
+            <div class="container"  id="footer-top">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="categorias-foot">
+                            <p class="parr-footer">Categorias</p>
+                            <hr style="border-color:white">
+                            <ul class="footer-list">
+                                <li>
+                                    <a class="tag-footer" href="">Envio</a>
+                                </li>
+                                <li>
+                                    <a class="tag-footer" href="">Pagos</a>
+                                </li>
+                                <li>
+                                    <a class="tag-footer" href="">Ofertas</a>
+                                </li>
+                                <li>
+                                    <a class="tag-footer" href="">Lo mas vendido</a>
+                                </li>
+                                <li>
+                                    <a class="tag-footer" href="">Novedades</a>
+                                </li>
+                                <li>
+                                    <a class="tag-footer" href="preguntas-frecuentes.php">Preguntas Precuentes</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="contact-foot">
+                            <p class="parr-footer">Contactanos</p>
+                            <hr style="border-color:white">
+                            <ul class="footer-list">
+                                <li class="li-beaver-buil">Beaver Builders</li>
+                                <li><img class="img-footer" src="resources/placeholder.png" alt=""> Juan Pablo Monjes 5404, Cordoba</li>
+                                <li><img class="img-footer" src="resources/whatsapp.png" alt=""> 0351 15-659-4587</li>
+                                <li><img class="img-footer" src="resources/gmail.png" alt=""> info@bebuilders.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="social-media-foot">
+                            <p class="parr-footer">Redes Sociales</p>
+                            <hr style="border-color:white">
+                            <ul class="footer-list">
+                                <li><a class="tag-footer" href="https://facebook.com"><img class="img-footer" src="resources/facebook.png" alt=""> Seguinos en Facebook</a></li>
+                                <li><a class="tag-footer" href="https://instagram.com"><img class="img-footer" src="resources/instagram.png" alt=""> Seguinos en Instagram</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
