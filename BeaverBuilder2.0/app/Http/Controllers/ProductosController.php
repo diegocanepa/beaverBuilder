@@ -13,7 +13,7 @@ class productosController extends Controller
       return view('productos', $vac);
     }
 
-    public function producto($id){
+    public function ver($id){
       $producto = Producto::find($id);
       $vac = compact('producto');
       return view('detalleProducto', $vac);

@@ -11,7 +11,6 @@
       </p>
     </div>
   </section>
-
   <div class="container">
     <form class="form-agrupa" action="productos.php" method="post">
       <div class="row">
@@ -24,7 +23,7 @@
               <p class="card-text"><?php echo substr($producto["descripcion"],0,50); ?></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a href="producto/<?php echo $producto["idProductos"];?>"><button type="button" class="btn btn-sm btn-outline-secondary">Ver mas</button></a>
+                  <a href="productos/{{ $producto["idProductos"] }}"><button type="button" class="btn btn-sm btn-outline-secondary">Ver mas</button></a>
                   <input class="btn btn-sm btn-outline-secondary" type="submit" name="" value="Agregar al Carrito">
                 </div>
                 <small class="text-muted"><?php echo "$".$producto["precio"]; ?></small>

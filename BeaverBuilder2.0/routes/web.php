@@ -25,4 +25,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/productos', 'ProductosController@listado')->name('productos');
 
-Route::get('/producto/{id}', 'ProductosController@producto')->name('detalleProducto');
+Route::get('/productos/{id}', 'ProductosController@ver')->name('detalleProducto');

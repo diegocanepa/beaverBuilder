@@ -4,8 +4,11 @@
     <title>Beaver Builders - Materiales de construccion</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+
+    <script src="{{ asset('js/app.js')}}" defer></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -22,41 +25,63 @@
     <link rel="icon" href=" https://assets.jumpseller.com/store/bootstrap/themes/215975/favicon.png?1571644467 ">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fadeInDown" id="navbar-respon">
-      <a class="navbar-brand" href="{{ route('login') }}" id="navbar-brand">Beaver Builder</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                  <li class="nav-item">
-                      <a class="nav-link" id="nav-li" href="{{ route('productos') }}">Productos</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" id="nav-li" href="home.php#about-services">Nosotros</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" id="nav-li" href="home.php#footer-section">Contactanos</a>
-                  </li>
-              </ul>
-              <div class="form-inline my-2 my-lg-0" id="end">
-                  <div class="menu-derecha" id="menu-derecha">
-                      <li class="nav-item">
-                          <a class="nav-link" id="nav-li" href="{{ route('login') }}">Login</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="nav-li" href="{{ route('register') }}">Registrarse</a>
-                      </li>
-                      <li class="nav-item">
-                            <a class="nav-link" id="nav-li-carrito" href="carrito.php"><img id="carrito-compras-img" src="resources/carrito-compras2.png" alt=""><span class="am-badge badge-pill badge-primary"></span></a>
-                      </li>
-                      <li class="nav-item">
-                            <a class="nav-link" id="nav-li-carrito" href=""><img id="carrito-compras-img" src="resources/carrito-compras2.png" alt=""></a>
-                      </li>
-                  </div>
-              </div>
-      </div>
-</nav>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fadeInDown" id="navbar-respon">
+            <div class="container">
+                <a class="navbar-brand" href="{{ route('login') }}" id="navbar-brand">Beaver Builder</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-li" href="{{ route('productos') }}">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-li" href="home.php#about-services">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="nav-li" href="home.php#footer-section">Contactanos</a>
+                        </li>
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" id="nav-li"  href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" id="nav-li"  href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="nav-li" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item nav-link" id="nav-li" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    <a class="nav-link" id="nav-li" href="home.php#footer-section">Mi Perfil</a>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
 <main>
   @yield('content')
@@ -115,8 +140,9 @@
                 </div>
             </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
 </body>
 </html>
