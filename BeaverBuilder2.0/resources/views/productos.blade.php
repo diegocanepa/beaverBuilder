@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-  <section class="jumbotron text-center">
+<div class="page-products">
+  <section class="text-center">
     <div class="container">
       <h1>Productos</h1>
       <p class="lead text-muted">
@@ -11,6 +12,79 @@
       </p>
     </div>
   </section>
+
+  <div class="container">
+    <div class="row">
+      <ul class="text-center">
+        <div class="col-lg-3">
+          <li class="booking-card" style="background-image: url(https://lh3.googleusercontent.com/proxy/jafRnek363XmTx8axxTXFBrhaYRjGNI1FsKZaXxoOKf_0vT3ov7FeTlmjaUjEBXjt6TPIO0ZuNt5Xp520Kq70af0fp6PbS-tYzWQRcuwTi5wipb8T9N8BRg);">
+            <div class="book-container">
+              <div class="content">
+                <button class="btn">COMPRAR</button>
+              </div>
+            </div>
+          </li>
+        </div>
+
+        <div class="col-lg-3">
+          <li class="booking-card" style="background-image: url(https://www.solucionesintegralesendesa.com/blog/wp-content/uploads/2017/03/ThinkstockPhotos-537864710.jpg);">
+            <div class="book-container">
+              <div class="content">
+                <button class="btn">COMPRAR</button>
+              </div>
+            </div>
+          </li>
+        </div>
+
+        <div class="col-lg-3">
+          <li class="booking-card" style="background-image: url(https://www.rubidoit.com/img/ideas/xno-todas-las-baldosas-ceramicas-son-iguales.jpg.pagespeed.ic.uF2oNg9zQH.jpg);">
+            <div class="book-container">
+              <div class="content">
+                <button class="btn">COMPRAR</button>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div class="col-lg-3">
+          <li class="booking-card" style="background-image: url(https://www.rubidoit.com/img/ideas/xno-todas-las-baldosas-ceramicas-son-iguales.jpg.pagespeed.ic.uF2oNg9zQH.jpg);">
+            <div class="book-container">
+              <div class="content">
+                <button class="btn">COMPRAR</button>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div class="col-lg-3">
+          <li class="booking-card" style="background-image: url(https://www.rubidoit.com/img/ideas/xno-todas-las-baldosas-ceramicas-son-iguales.jpg.pagespeed.ic.uF2oNg9zQH.jpg);">
+            <div class="book-container">
+              <div class="content">
+                <button class="btn">COMPRAR</button>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div class="col-lg-3">
+          <li class="booking-card" style="background-image: url(https://www.rubidoit.com/img/ideas/xno-todas-las-baldosas-ceramicas-son-iguales.jpg.pagespeed.ic.uF2oNg9zQH.jpg);">
+            <div class="book-container">
+              <div class="content">
+                <button class="btn">COMPRAR</button>
+              </div>
+            </div>
+          </li>
+        </div>
+        <div class="col-lg-3">
+          <li class="booking-card" style="background-image: url(https://www.rubidoit.com/img/ideas/xno-todas-las-baldosas-ceramicas-son-iguales.jpg.pagespeed.ic.uF2oNg9zQH.jpg);">
+            <div class="book-container">
+              <div class="content">
+                <button class="btn">COMPRAR</button>
+              </div>
+            </div>
+          </li>
+        </div>
+      </ul>
+    </div>
+  </div>
+
   <div class="container">
     <form class="form-agrupa" action="productos.php" method="post">
       <div class="row">
@@ -35,4 +109,6 @@
       </div>
     </form>
   </div>
+</div>
+
 @endsection

@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Producto extends Model
+class Pedido extends Model
 {
-  public $table = 'productos';
-  public $primaryKey = 'idProductos';
+  public $table = 'pedido';
+  public $primaryKey = 'idPedido';
   public $timestamps = false;
   public $guarded = [];
 }

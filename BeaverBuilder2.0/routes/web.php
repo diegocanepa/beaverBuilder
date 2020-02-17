@@ -23,6 +23,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/productos', 'ProductosController@listado')->name('productos');
+Route::get('/productos', 'ProductosController@index')->name('productos');
 
-Route::get('/productos/{id}', 'ProductosController@ver')->name('detalleProducto');
+Route::get('/productos/{id}', 'ProductosController@show')->name('detalleProducto');
+
+
+Route::get('/dashBoardAdmin', function(){
+  return view('dashBoardAdmin');
+})->name('dashboardAdmin');
+
+route::get('/ABMProductos', 'ProductosController@listadoProductos')->name('ABMProductos');
+
+Route::post('/ABMProductos', 'ProductosController@listadoProductosFiltro')->name('ABMProductos');
