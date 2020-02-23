@@ -86,9 +86,9 @@
   </div>
 
   <div class="container">
-    <form class="form-agrupa" action="productos.php" method="post">
+
       <div class="row">
-      <?php foreach ($productosListado as $producto): ?>
+      @foreach ($productosListado as $producto)
         <div class="col-md-4">
           <div class="card mb-4 shadow-sm">
             <img class="imagen-productos" src="<?php echo $producto["imagen"]; ?>" alt="">
@@ -97,17 +97,17 @@
               <p class="card-text"><?php echo substr($producto["descripcion"],0,50); ?></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a href="productos/{{ $producto["idProductos"] }}"><button type="button" class="btn btn-sm btn-outline-secondary">Ver mas</button></a>
-                  <input class="btn btn-sm btn-outline-secondary" type="submit" name="" value="Agregar al Carrito">
+                    <a href="productos/{{ $producto["idProductos"] }}"><button type="button" class="btn btn-sm btn-outline-secondary">Ver mas</button></a>
+                    <a href="agregar/{{ $producto["idProductos"] }}"><button type="button" class="btn btn-sm btn-outline-secondary">Agregar al carrito</button></a>
                 </div>
                 <small class="text-muted"><?php echo "$".$producto["precio"]; ?></small>
               </div>
             </div>
           </div>
         </div>
-      <?php endforeach; ?>
+      @endforeach
       </div>
-    </form>
+
   </div>
 </div>
 

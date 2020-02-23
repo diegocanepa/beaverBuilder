@@ -24,9 +24,12 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/productos', 'ProductosController@index')->name('productos');
-
+Route::get('agregar/{id}', 'ProductosController@agregar')->name('agregar');
 Route::get('/productos/{id}', 'ProductosController@show')->name('detalleProducto');
 
+Route::get('/carritoCompras', 'ProductosController@listadoProductosCarrito')->name('carritoCompras');
+Route::post('/carritoCompras', 'ProductosController@calculoCodigoDescuento')->name('carritoCompras');
+Route::get('/eliminar/{id}', 'ProductosController@eliminarProdCarrito')->name('eliminar');
 
 Route::get('/dashBoardAdmin', function(){
   return view('dashBoardAdmin');
@@ -35,3 +38,6 @@ Route::get('/dashBoardAdmin', function(){
 route::get('/ABMProductos', 'ProductosController@listadoProductos')->name('ABMProductos');
 
 Route::post('/ABMProductos', 'ProductosController@listadoProductosFiltro')->name('ABMProductos');
+
+
+Route::get('/perfilUsuario', 'PerfilUsuarioController@listadoComprasRealizadas')->name('perfilUsuario');

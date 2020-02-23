@@ -17,6 +17,7 @@
     <link href="/css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="css/animation.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.5/assets/owl.carousel.min.css'>
+    
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -98,11 +99,11 @@
                                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                       @csrf
                                   </form>
-                                  <a class="nav-link" id="nav-li" href="home.php#footer-section">Mi Perfil</a>
+                                  <a class="nav-link" id="nav-li" href="{{ route('perfilUsuario') }}">Mi Perfil</a>
                               </div>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" id="nav-li-carrito" href=""><img id="carrito-compras-img" src="/Iconos/carrito-compras2.png" alt=""></a>
+                              <a class="nav-link" id="nav-li-carrito" href="{{ route ('carritoCompras') }}"><img id="carrito-compras-img" src="/Iconos/carrito-compras2.png" alt=""></a>
                           </li>
                       </ul>
                     </div>

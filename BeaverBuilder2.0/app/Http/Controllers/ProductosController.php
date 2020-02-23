@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Producto;
 use App\Marca;
 use App\Categoria;
+use App\Descuento;
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -19,6 +20,15 @@ class ProductosController extends Controller
       $productosListado = Producto::all();
       $vac = compact('productosListado');
       return view('productos', $vac);
+    }
+
+    public function agregar ($id)
+    {
+      session_start();
+      $_SESSION['carrito'][]=$id;
+      //$productos = Producto::whereIn('idProductos', $_SESSION['carrito'])->get();
+      //dd($productos);
+      return redirect ('productos');
     }
 
     /**
@@ -108,7 +118,7 @@ class ProductosController extends Controller
         $productos = $productos->where('codigo','LIKE','%'.$form['codigoProducto'].'%');
       }
       if ($form['nombreProducto']) {
-        $productos = $productos->where('nombre','LIKE','%'.$form['nombreProducto'].'%');
+        $productos = $productos->where('productos.nombre','LIKE','%'.$form['nombreProducto'].'%');
       }
       if ($form['precioDesde']) {
         $productos = $productos->where('precio','>', $form['precioDesde']);
@@ -127,6 +137,54 @@ class ProductosController extends Controller
       $categorias = Categoria::all();
       $vac = compact('productos', 'marcas', 'categorias');
       return view ('ABMProductos', $vac);
+    }
+
+    public function listadoProductosCarrito(){
+      session_start();
+      $productosCarrito = Producto::whereIn('idProductos', $_SESSION['carrito'])->get();
+      $subtotal = 0;
+      foreach ($productosCarrito as $productoCarrito) {
+        $subtotal = $subtotal + $productoCarrito['precio'];
+      }
+      $total = $subtotal;
+      $vac = compact('productosCarrito', 'subtotal', 'total');
+      return view('carritoCompras', $vac);
+    }
+
+    public function calculoCodigoDescuento(Request $codigoDescuento){
+      session_start();
+      $productosCarrito = Producto::whereIn('idProductos', $_SESSION['carrito'])->get();
+      $subtotal = 0;
+      foreach ($productosCarrito as $productoCarrito) {
+        $subtotal = $subtotal + $productoCarrito['precio'];
+      }
+      $descuento = null;
+      $descuento = Descuento::Where('codigoDescuento', '=', $codigoDescuento['codigoDescuento'])->where('fechaInicio', '<', date('Y-m-d'))->where('fechaFin', '>', date('Y-m-d'))->get();
+      $total = $subtotal;
+      if ($descuento != null){
+        $total = $total - ($total * $descuento->porcentaje / 100);
+      }
+      $vac = compact('productosCarrito', 'subtotal', 'total');
+      return view('carritoCompras', $vac);
+    }
+
+    public function eliminarProdCarrito($id){
+      session_start();
+      $arrayTemporal = $_SESSION['carrito'];
+      $_SESSION['carrito'] = [];
+      foreach ($arrayTemporal as $valor) {
+        if ($valor != $id){
+          $_SESSION['carrito'][] = $valor;
+        }
+      }
+      $productosCarrito = Producto::whereIn('idProductos', $_SESSION['carrito'])->get();
+      $subtotal = 0;
+      foreach ($productosCarrito as $productoCarrito) {
+        $subtotal = $subtotal + $productoCarrito['precio'];
+      }
+      $total = $subtotal;
+      $vac = compact('productosCarrito', 'subtotal', 'total');
+      return view('carritoCompras', $vac);
     }
 
 }
