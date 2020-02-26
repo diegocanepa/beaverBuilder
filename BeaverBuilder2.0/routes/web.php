@@ -36,8 +36,11 @@ Route::get('/dashBoardAdmin', function(){
 })->name('dashboardAdmin');
 
 route::get('/ABMProductos', 'ProductosController@listadoProductos')->name('ABMProductos');
-
 Route::post('/ABMProductos', 'ProductosController@listadoProductosFiltro')->name('ABMProductos');
-
+Route::post('/BajaProducto', 'ProductosController@eliminarProducto')->name('BajaProducto');
 
 Route::get('/perfilUsuario', 'PerfilUsuarioController@listadoComprasRealizadas')->name('perfilUsuario');
+
+Route::get('/resultadoCompra', function(){
+  return view('resultadoCompra');
+})->name('resultadoCompra');

@@ -176,7 +176,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Comprar</button>
+                            <a href="{{ Route('resultadoCompra')}}"><button type="button" class="btn btn-primary">Comprar</button></a>
                           </div>
                         </div>
                       </div>

@@ -1110,3 +1110,19 @@ ul .booking-card:hover .book-container .content {
     transform: translateY(0px);
   }
 }
+
+/*
+  RESULTADO DE LAS COMPRAS
+*/
+
+.resultado-compra{
+    background: #fed336c2;
+}
+
+.texto-resultado{
+    background-color: #e6e6e6;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}

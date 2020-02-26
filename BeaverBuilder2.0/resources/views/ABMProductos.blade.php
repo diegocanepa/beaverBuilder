@@ -207,41 +207,124 @@
                                   <th  class="columnasABMProductos" scope="col">Nombre</th>
                                   <th  class="columnasABMProductos" scope="col">Categoria</th>
                                   <th  class="columnasABMProductos" scope="col">Marca</th>
+                                  <th  class="columnasABMProductos" scope="col">Oferta</th>
                                   <th  class="columnasABMProductos" scope="col">Precio</th>
                                 </tr>
                               </thead>
-                              @foreach ($productos as $value)
+
+
+
+                              @foreach ($productos as $i => $value)
                                 <tr>
                                   <td class="filasABMProductos text-center pl-0 pr-0">
                                     <!-- Button trigger modal -->
-                                    <input class="botonEliminar" type="image" src="Iconos/eliminar.png" name=""  data-toggle="modal" data-target="#exampleModal">
-
+                                    <input class="botonEliminar" type="image" src="Iconos/eliminar2.png" name=""  data-toggle="modal" data-target="#modal-producto-{{$i}}">
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog" role="document">
+                                    <div class="modal fade" id="modal-producto-{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                           <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Importante!</h5>
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Importante!</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                               <span aria-hidden="true">&times;</span>
                                             </button>
                                           </div>
-                                          ¿Esta seguro que desea eliminar este producto por completo de la base de datos?
-                                          <div class="mostrarvalores"></div>
-                                          <form action="ABM_Productos.php" method="POST">
-                                            <input type="hidden" name="codProdEliminacion" id="caja_valor" value="">
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                              <button type="submit" class="btn btn-primary">Aceptar</button>
-                                            </div>
-                                          </form>
+                                          <div class="modal-body">
+                                            ¿Esta seguro que desea eliminar este producto por completo de la base de datos?
+                                            {{ 'codigo producto: '. $value["codigo"]  }}
+                                            <form action="{{ route('BajaProducto' )}}" method="POST">
+                                              @csrf
+                                              <input type="hidden" name="idProducto" id="caja_valor" value="{{$value["idProductos"]}}">
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-primary">Aceptar</button>
+                                              </div>
+                                            </form>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
                                   </td>
                                   <td class="filasABMProductos text-center pl-0 pr-0">
-                                    <a href=""><img class= "imagenTabla-abm" src="Iconos/modificar.png" alt=""></a>
+                                    <!-- Button trigger modal -->
+                                    <input class="botonEliminar" type="image" src="Iconos/modificar2.png" name=""  data-toggle="modal" data-target="#modal-producto-editar-{{$i}}">
+
+                                    <!-- Modal -->
+                                    <div class="modal fade bd-example-modal-lg" id="modal-producto-editar-{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                      <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Edicion Producto</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <form>
+                                              <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                  <label for="inputEmail4">Codigo</label>
+                                                  <input type="text" class="form-control" id="inputEmail4" value="{{$value["codigo"] }}">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                  <label for="inputPassword4">Nombre</label>
+                                                  <input type="text" class="form-control" id="inputPassword4" value="{{$value["nombre"] }}">
+                                                </div>
+                                              </div>
+                                              <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                  <label for="inputEmail4">Precio</label>
+                                                  <input type="number" class="form-control" id="inputEmail4" value="{{$value["precio"] }}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                  <label for="inputEmail4">Stock</label>
+                                                  <input type="number" class="form-control" id="inputEmail4" value="{{$value["stock"] }}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                  <label for="inputPassword4">Marca</label>
+                                                  <select class="custom-select" name='marca'>
+                                                    <option value="{{$value['Marca_idMarca']}}">{{$value['nombreMarca']}}</option>
+                                                    @foreach ($categorias as $categoria)
+                                                      <option value="{{ $categoria['idCategoria'] }}">{{ $categoria['nombre'] }}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                  <label for="inputPassword4">Categoria</label>
+                                                  <select class="custom-select" name='categoria'>
+                                                    <option value="{{$value['Categoria_idCategoria']}}">{{$value['nombreCategoria']}}</option>
+                                                    @foreach ($categorias as $categoria)
+                                                      <option value="{{ $categoria['idCategoria'] }}">{{ $categoria['nombre'] }}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
+                                              </div>
+                                              <div class="form-group">
+                                                <label for="inputAddress">Descripcion</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{$value["descripcion"] }}</textarea>
+                                              </div>
+                                              <div class="form-group">
+                                                <div class="form-check">
+                                                  @if ($value['oferta'] = 'S')
+                                                    <input class="form-check-input" type="checkbox" id="gridCheck" checked>
+                                                  @else
+                                                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                                                  @endif
+                                                  <label class="form-check-label" for="gridCheck">
+                                                    Oferta
+                                                  </label>
+                                                </div>
+                                              </div>
+                                              <button type="submit" class="btn btn-primary">Modificar</button>
+                                              <button type="submit" class="btn btn-primary">Eliminar</button>
+                                              <button type="submit" class="btn btn-primary">Nuevo</button>
+                                            </form>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
                                   </td>
                                   <td class="filasABMProductos">
                                     {{ $value["codigo"] }}
@@ -254,6 +337,9 @@
                                   </td>
                                   <td class="filasABMProductos">
                                     {{ $value["nombreMarca"] }}
+                                  </td>
+                                  <td class="filasABMProductos">
+                                    {{ $value["oferta"] }}
                                   </td>
                                   <td class="filasABMProductos">
                                     ${{ $value["precio"] }}

@@ -101,7 +101,7 @@ class ProductosController extends Controller
 
     public function listadoProductos()
     {
-        $productos = Producto::all();
+        $productos = Producto::Where('borrado', '=', 'N')->get();
         $marcas = Marca::all();
         $categorias = Categoria::all();
         $vac = compact('productos', 'marcas', 'categorias');
@@ -185,6 +185,19 @@ class ProductosController extends Controller
       $total = $subtotal;
       $vac = compact('productosCarrito', 'subtotal', 'total');
       return view('carritoCompras', $vac);
+    }
+
+    public function eliminarProducto(Request $codigoProducto){
+      $producto = Producto::find($codigoProducto['idProducto']);
+      $producto->borrado = 'S';
+      $producto->save();
+
+      // busca productos para mostrar
+      $productos = Producto::Where('borrado', '=', 'N')->get();
+      $marcas = Marca::all();
+      $categorias = Categoria::all();
+      $vac = compact('productos', 'marcas', 'categorias');
+      return view ('ABMProductos', $vac);
     }
 
 }
