@@ -101,7 +101,10 @@ class ProductosController extends Controller
 
     public function listadoProductos()
     {
-        $productos = Producto::Where('borrado', '=', 'N')->get();
+        $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                                ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                                ->Where('borrado', '=', 'N')
+                                ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
         $marcas = Marca::all();
         $categorias = Categoria::all();
         $vac = compact('productos', 'marcas', 'categorias');
@@ -193,11 +196,38 @@ class ProductosController extends Controller
       $producto->save();
 
       // busca productos para mostrar
-      $productos = Producto::Where('borrado', '=', 'N')->get();
+      $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                              ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                              ->Where('borrado', '=', 'N')
+                              ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
       $marcas = Marca::all();
       $categorias = Categoria::all();
       $vac = compact('productos', 'marcas', 'categorias');
       return view ('ABMProductos', $vac);
     }
 
+    public function modificarProducto(Request $datosProd){
+      $producto = Producto::find($datosProd['idProducto']);
+      $producto->nombre = $datosProd['nombre'];
+      $producto->imagen = $datosProd['imagen'];
+      $producto->descripcion = $datosProd['descripcion'];
+      $producto->precio = $datosProd['precio'];
+      $producto->Categoria_idCategoria = $datosProd['categoria'];
+      $producto->Marca_idMarca = $datosProd['marca'];
+      /*$producto->oferta = $datosProd['nombre*/
+      $producto->Stock = $datosProd['stock'];
+
+      $producto->save();
+
+
+      // busca productos para mostrar
+      $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                              ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                              ->Where('borrado', '=', 'N')
+                              ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
+      $marcas = Marca::all();
+      $categorias = Categoria::all();
+      $vac = compact('productos', 'marcas', 'categorias');
+      return view ('ABMProductos', $vac);
+    }
 }

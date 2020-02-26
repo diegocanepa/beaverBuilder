@@ -81,69 +81,6 @@
         </div>
 
         <div class="container">
-
-
-                    <!-- OPCION ALTA DE PRODUCTO
-
-                      <div class="row">
-                        <div class="col-lg-12">
-                          <h1 class="text-center pb-4">Nuevo Producto</h1>
-                          <form action="ABM_Productos.php">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <label for="codigoProducto">Codigo</label>
-                                  <input type="text" class="form-control form-control-sm" id="codigoProducto" required>
-                                  <small id="emailHelp" class="form-text text-muted">Ingrese el codigo del Producto</small>
-                                </div>
-                                <div class="form-group col-md-6">
-                                  <label for="nombreProducto">Nombre</label>
-                                  <input type="text" class="form-control form-control-sm" id="nombreProducto" required>
-                                  <small id="emailHelp" class="form-text text-muted">Ingrese el nombre del Producto</small>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                              <div class="form-group col-md-4">
-                                  <label for="precio">Precio</label>
-                                  <input type="number" class="form-control form-control-sm" id="precio" required>
-                                  <br>
-                                  <label for="Categoria">Categoria</label>
-                                  <select class="custom-select input-sm" id="Categoria" required>
-                                      <option selected>Choose...</option>
-                                      <option value="1">Venatana</option>
-                                      <option value="2">Puerta</option>
-                                      <option value="3">Alfombra</option>
-                                  </select>
-                                  <br>
-                                  <br>
-                                  <label for="marca">Marca</label>
-                                  <select class="custom-select input-sm" id="marca" required>
-                                      <option selected>Choose...</option>
-                                      <option value="1">Riot</option>
-                                      <option value="2">Alma</option>
-                                      <option value="3">Easy</option>
-                                  </select>
-                              </div>
-                              <div class="form-group col-md-2">
-
-                              </div>
-
-                              <div class="form-group col-md-6">
-                                <div class="mb-3">
-                                    <label for="DescripcionLarga">Descripcion</label>
-                                    <textarea rows="8" class="form-control form-control-sm" id="DescripcionLarga" placeholder="Descripcion Requerida" required
-          ></textarea>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary">Agregar Producto</button>
-                          </div>
-
-                          </form>
-                        </div>
-                        -->
-
                       <div class="row">
                         <div class="col-lg-12">
                           <form action="{{ route('ABMProductos') }}" method="post">
@@ -193,6 +130,82 @@
                               </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Buscar</button>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+                            <!-- Modal -->
+                            <div class="modal fade bd-example-modal-lg" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+                              <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Edicion Producto</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form class="" action="{{ Route('ModificarProducto')}}" method="post">
+                                      @csrf
+                                      <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                          <label for="inputEmail4">Codigo</label>
+                                          <input type="text" name="codigo" class="form-control" id="inputEmail4">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                          <label for="inputPassword4">Nombre</label>
+                                          <input type="text" name="nombre" class="form-control" id="inputPassword4">
+                                        </div>
+                                      </div>
+                                      <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                          <label for="inputEmail4">Precio</label>
+                                          <input type="number" class="form-control" name="precio" id="inputEmail4">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                          <label for="inputEmail4">Stock</label>
+                                          <input type="number" name="stock" class="form-control" id="inputEmail4">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                          <label for="inputPassword4">Marca</label>
+                                          <select class="custom-select" name='categoria'>
+                                            <option value="0">Seleccione</option>
+                                            @foreach ($categorias as $categoria)
+                                              <option value="{{ $categoria['idCategoria'] }}">{{ $categoria['nombre'] }}</option>
+                                            @endforeach
+                                          </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                          <label for="inputPassword4">Categoria</label>
+                                          <select class="custom-select" name='categoria'>
+                                            <option value="0">Seleccione</option>
+                                            @foreach ($categorias as $categoria)
+                                              <option value="{{ $categoria['idCategoria'] }}">{{ $categoria['nombre'] }}</option>
+                                            @endforeach
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="form-row">
+                                        <div class="custom-file form-group col-md-6">
+                                          <input type="file" name="imagen" class="custom-file-input" id="customFileLang" lang="es">
+                                          <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                                        </div>
+                                  
+                                        <div class="form-check form-group col-md-3">
+                                          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                          <label class="form-check-label" for="exampleCheck1">Oferta</label>
+                                        </div>
+                                      </div>
+                                      <br>
+                                      <div class="form-group">
+                                        <label for="inputAddress">Descripcion</label>
+                                        <textarea name="descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                      </div>
+                                      <button type="submit" class="btn btn-primary">Crear Prodcuto</button>
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </form>
                         </div>
                       </div>
@@ -251,7 +264,7 @@
                                     <input class="botonEliminar" type="image" src="Iconos/modificar2.png" name=""  data-toggle="modal" data-target="#modal-producto-editar-{{$i}}">
 
                                     <!-- Modal -->
-                                    <div class="modal fade bd-example-modal-lg" id="modal-producto-editar-{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal fade bd-example-modal-lg" id="modal-producto-editar-{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
                                       <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                           <div class="modal-header">
@@ -261,25 +274,27 @@
                                             </button>
                                           </div>
                                           <div class="modal-body">
-                                            <form>
+                                            <form class="" action="{{ Route('ModificarProducto')}}" method="post">
+                                              @csrf
+                                              <input type="hidden" name="idProducto" value="{{$value["idProductos"] }}">
                                               <div class="form-row">
                                                 <div class="form-group col-md-6">
                                                   <label for="inputEmail4">Codigo</label>
-                                                  <input type="text" class="form-control" id="inputEmail4" value="{{$value["codigo"] }}">
+                                                  <input type="text" name="codigo" class="form-control" id="inputEmail4" value="{{$value["codigo"] }}" disabled>
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                   <label for="inputPassword4">Nombre</label>
-                                                  <input type="text" class="form-control" id="inputPassword4" value="{{$value["nombre"] }}">
+                                                  <input type="text" name="nombre" class="form-control" id="inputPassword4" value="{{$value["nombre"] }}">
                                                 </div>
                                               </div>
                                               <div class="form-row">
                                                 <div class="form-group col-md-3">
                                                   <label for="inputEmail4">Precio</label>
-                                                  <input type="number" class="form-control" id="inputEmail4" value="{{$value["precio"] }}">
+                                                  <input type="number" class="form-control" name="precio" id="inputEmail4" value="{{$value["precio"] }}">
                                                 </div>
                                                 <div class="form-group col-md-3">
                                                   <label for="inputEmail4">Stock</label>
-                                                  <input type="number" class="form-control" id="inputEmail4" value="{{$value["stock"] }}">
+                                                  <input type="number" name="stock" class="form-control" id="inputEmail4" value="{{$value["stock"] }}">
                                                 </div>
                                                 <div class="form-group col-md-3">
                                                   <label for="inputPassword4">Marca</label>
@@ -300,12 +315,12 @@
                                                   </select>
                                                 </div>
                                               </div>
-                                              <div class="form-group">
-                                                <label for="inputAddress">Descripcion</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{$value["descripcion"] }}</textarea>
-                                              </div>
-                                              <div class="form-group">
-                                                <div class="form-check">
+                                              <div class="form-row">
+                                                <div class="custom-file form-group col-md-6">
+                                                  <input type="file" name="imagen" class="custom-file-input" id="customFileLang" lang="es">
+                                                  <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                                                </div>
+                                                <div class="form-check form-group col-md-3">
                                                   @if ($value['oferta'] = 'S')
                                                     <input class="form-check-input" type="checkbox" id="gridCheck" checked>
                                                   @else
@@ -316,9 +331,15 @@
                                                   </label>
                                                 </div>
                                               </div>
-                                              <button type="submit" class="btn btn-primary">Modificar</button>
-                                              <button type="submit" class="btn btn-primary">Eliminar</button>
-                                              <button type="submit" class="btn btn-primary">Nuevo</button>
+                                              <br>
+                                              <div class="form-group">
+                                                <label for="inputAddress">Descripcion</label>
+                                                <textarea name="descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3">{{$value["descripcion"] }}</textarea>
+                                              </div>
+                                              <button type="submit" class="btn btn-success">Modificar</button>
+                                              <button type="button" class="btn btn-danger">Eliminar</button>
+                                              <button type="button" class="btn btn-primary">Nuevo Poducto</button>
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                             </form>
                                           </div>
                                         </div>
