@@ -130,7 +130,16 @@
                                     </div>
                                   </td>
                                   <td class="filas text-right">
-                                    <input type="radio" name="seleccionTarjeta" value="1">  Seleccionar
+                                    <form class="" action="{{ Route ('resultadoCompra') }}" method="post">
+                                      @csrf
+                                      <input type="hidden" name="nombreTarjeta" value="Mastercard">
+                                      <input type="hidden" name="codigoTarjeta" value="112233">
+                                      <input type="hidden" name="totalCompra" value="{{ $total }}">
+                                      <input type="hidden" name="subtotalCompra" value="{{ $subtotal }}">
+                                      <input type="hidden" name="productosCarrito" value="{{ $productosCarrito }}">
+                                      <button type="submit" class="btn btn-dark">Seleccionar</button>
+                                    </form>
+
                                   </td>
                                 </tr>
                                 <tr>
@@ -149,7 +158,7 @@
                                     </div>
                                   </td>
                                   <td class="filas text-right">
-                                    <input type="radio" name="seleccionTarjeta" value="2">  Seleccionar
+                                    <button type="button" class="btn btn-dark">Seleccionar</button>
                                   </td>
                                 </tr>
                                 <tr>
@@ -168,7 +177,7 @@
                                     </div>
                                   </td>
                                   <td class="filas text-right">
-                                    <input type="radio" name="seleccionTarjeta" value="3">  Seleccionar
+                                    <button type="button" class="btn btn-dark">Seleccionar</button>
                                   </td>
                                 </tr>
                               </tbody>
@@ -176,7 +185,6 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <a href="{{ Route('resultadoCompra')}}"><button type="button" class="btn btn-primary">Comprar</button></a>
                           </div>
                         </div>
                       </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DetallePedido;
+use APP\Pedido;
 use Illuminate\Http\Request;
 
 class carritoComprasController extends Controller
@@ -81,5 +82,36 @@ class carritoComprasController extends Controller
     public function destroy(DetallePedido $detallePedido)
     {
         //
+    }
+
+
+    public function guardarCompra(Request $request){
+      try {
+        $pedido = new Pedido();
+
+        $pedido->fechaPedido = date('Y-m-d');
+        $pedido->total =
+        $pedido->totalConDescuento =
+        $descuento_codigoDescuento =
+        $estadoPedido_idEstadoPedido =
+
+        foreach ($request['productosCarrito'] as $key => $value) {
+          $detallePedido = new DetallePedido();
+
+          $detallePedido->cantidad =
+          $detallePedido->precio =
+          $detallePedido->subtotal =
+          $detallePedido->productos_idProductos =
+          
+
+        }
+
+      } catch (\Exception $e) {
+
+      }
+
+      $booleano = true;
+      $vac = compact('booleano');
+      return view('resultadoCompra', $vac);
     }
 }
