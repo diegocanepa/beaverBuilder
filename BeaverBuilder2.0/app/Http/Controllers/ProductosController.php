@@ -230,4 +230,38 @@ class ProductosController extends Controller
       $vac = compact('productos', 'marcas', 'categorias');
       return view ('ABMProductos', $vac);
     }
+
+    public function nuevoProducto(Request $datosProd){
+      $producto = Producto::where('codigo','=',$datosProd['codigo'])->get();
+      if ($producto->isEmpty()) {
+        dd($datosProd['oferta']);
+        $producto = new Producto();
+        $producto->codigo = $datosProd['codigo'];
+        $producto->nombre = $datosProd['nombre'];
+        $producto->imagen = $datosProd['imagen'];
+        $producto->descripcion = $datosProd['descripcion'];
+        $producto->precio = $datosProd['precio'];
+        $producto->Categoria_idCategoria = $datosProd['categoria'];
+        $producto->Marca_idMarca = $datosProd['marca'];
+        /*$producto->oferta = $datosProd['oferta'];*/
+        $producto->stock = $datosProd['stock'];
+
+        $producto->save();
+
+      }else {
+        dd('dfdfdfdfdfdfd');
+      }
+
+
+      // busca productos para mostrar
+      $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                              ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                              ->Where('borrado', '=', 'N')
+                              ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
+      $marcas = Marca::all();
+      $categorias = Categoria::all();
+      $vac = compact('productos', 'marcas', 'categorias');
+      return view ('ABMProductos', $vac);
+    }
+
 }

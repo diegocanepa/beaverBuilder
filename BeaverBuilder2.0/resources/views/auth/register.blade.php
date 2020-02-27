@@ -66,7 +66,7 @@
                               <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Imagen de Perfil') }}</label>
                               <div class="custom-file col-md-6">
                                 <label class="file">
-                                  <input type="file" id="file" aria-label="File browser example" required name="imagen">
+                                  <input type="file" id="file" aria-label="File browser example" name="imagen">
                                   <span class="file-custom"></span>
                                 </label>
                               </div>
