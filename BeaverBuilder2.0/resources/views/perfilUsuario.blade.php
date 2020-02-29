@@ -1,58 +1,88 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-4 ">
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+<div class="perfilUsuario">
+  <header class="headerProfile">
+      <div class="container">
+        <div class="teacher-name pt-3">
+          <div class="row" id="row">
+          <div class="col-sm-9">
+            <h2><strong>Rick Sanchez</strong></h2>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
-          <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+          <div class="col-sm-3">
+            <div class="button pull-right float-right">
+              <a href="{{ Route('perfilUsuarioEdit') }}" class="btn btn-outline-success btn-sm">Edit Profile <i class="fa fa-pencil"></i></a>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="row" id="row" style="margin-top:20px;">
+          <div class="col-sm-3">
+            <a href="#"> <img class="rounded-circle" src="//images.weserv.nl/?url=i.imgur.com/Md9jS0Ib.jpg" alt="Rick" ></a>
+          </div>
+
+          <div class="col-sm-6">
+            <h5Associate Professor, <small>Dept. of Alien Agriculture, Jaarvlar-3 University</small></h5>
+            <p>PhD on Molecular Shwanky Physics</p>
+            <p>Address: 123 Cuba str Tampa, Fl, Earth 137</p>
+          </div>
+
+          <div class="col-sm-3 text-center social">
+            <span class="number">Phone:<strong>+0001732226402</strong></span>
+            <div class="button-email">
+              <a href="mailto:arick@yahoo.com" class="btn btn-outline-success btn-block"><i class="fa fa-envelope-o"></i> Send Email</a>
+            </div>
+            <div class="social-icons">
+              <a href="#">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x" ></i>
+                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+              </span></a>
+              <a href="#">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fab fa-google-plus fa-stack-1x fa-inverse"></i>
+              </span></a>
+              <a href="#">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+              </span></a>
+              <a href="#">
+              <span class="fa-stack">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fab fa-slideshare fa-stack-1x fa-inverse"></i>
+              </span></a>
+
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-8">
-        <table class="table table-hover table-sm">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
+    </header>
+    <div class="container">
+
+      <div class="row pb-10" id="row">
+          <div class="col-sm-12">
+            <div class="card card-block text-xs-left p-3" id="card">
+              <h5><i class="fa fa-user fa-fw"></i>Biography</h5>
+
+                <p>Rick Sanchez C-137 is the father of Beth Smith, and the grandfather of Morty and Summer Smith. Aged 60 years old, he is said to have been away from the family for around fourteen years prior to the events of the show's first episode, "Pilot". He frequently travels on adventures through space and other planets and dimensions with his grandson Morty.</p>
+              </div>
+          </div>
       </div>
 
-    </div>
+      <div class="row" id="row">
+          <div class="col-sm-12 pb-10">
+            <div class="card card-block text-xs-left p-3" id="card">
+              <h5><i class="fa fa-user fa-fw"></i>Biography</h5>
+
+                <p>Rick Sanchez C-137 is the father of Beth Smith, and the grandfather of Morty and Summer Smith. Aged 60 years old, he is said to have been away from the family for around fourteen years prior to the events of the show's first episode, "Pilot". He frequently travels on adventures through space and other planets and dimensions with his grandson Morty.</p>
+              </div>
+          </div>
+      </div>
+
+
+  </div>
 </div>
 @endsection

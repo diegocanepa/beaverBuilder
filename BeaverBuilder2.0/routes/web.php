@@ -43,6 +43,11 @@ Route::post('/NuevoProducto', 'ProductosController@nuevoProducto')->name('NuevoP
 
 Route::get('/perfilUsuario', 'PerfilUsuarioController@listadoComprasRealizadas')->name('perfilUsuario');
 
+Route::get('/perfilUsuarioEdit', function(){
+  return view('perfilUsuarioEdit');
+})->name('perfilUsuarioEdit');
+
+
 Route::get('/resultadoCompra', function(){
   return view('resultadoCompra');
 })->name('resultadoCompra');

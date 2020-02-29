@@ -17,7 +17,9 @@
     <link href="/css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="css/animation.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.5/assets/owl.carousel.min.css'>
-    
+
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/08a1b164fc.js" crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
