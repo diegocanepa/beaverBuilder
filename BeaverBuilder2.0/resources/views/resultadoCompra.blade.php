@@ -5,7 +5,7 @@
     <div class="container">
       <div class="row text-center">
         <div class="col-sm-12 text-center texto-resultado">
-          @if ($condition)
+          @if ($booleano)
             <img src="/Iconos/compraExitosa.png" alt="">
             <h1>¡Gracias por su compra!</h1>
             <h4>El pago fue realizado con exito</h4>

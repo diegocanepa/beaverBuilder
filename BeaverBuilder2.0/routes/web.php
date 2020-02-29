@@ -30,11 +30,13 @@ Route::get('/productos/{id}', 'ProductosController@show')->name('detalleProducto
 Route::get('/carritoCompras', 'ProductosController@listadoProductosCarrito')->name('carritoCompras');
 Route::post('/carritoCompras', 'ProductosController@calculoCodigoDescuento')->name('carritoCompras');
 Route::get('/eliminar/{id}', 'ProductosController@eliminarProdCarrito')->name('eliminar');
+route::post('/resultadoCompra', 'carritoComprasController@guardarCompra')->name('resultadoCompra');
 
 Route::get('/dashBoardAdmin', function(){
   return view('dashBoardAdmin');
 })->name('dashboardAdmin');
 
+/*rutas carito*/
 route::get('/ABMProductos', 'ProductosController@listadoProductos')->name('ABMProductos');
 Route::post('/ABMProductos', 'ProductosController@listadoProductosFiltro')->name('ABMProductos');
 Route::post('/BajaProducto', 'ProductosController@eliminarProducto')->name('BajaProducto');
