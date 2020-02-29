@@ -34,8 +34,105 @@
               </div>
 
               <div class="mb-3">
-                <label for="address">Dirección</label>
+                <label for="address">Direcciones</label>
+                <table class="table table-striped table-sm">
+                    <tbody>
+                      <thead>
+                        <tr>
+                          <th  class="columnasABMProductos" scope="col">Calle</th>
+                          <th  class="columnasABMProductos" scope="col">Numero</th>
+                          <th  class="columnasABMProductos" scope="col">Provincia</th>
+                          <th  class="columnasABMProductos" scope="col">Localidad</th>
+                          <th  class="columnasABMProductos" scope="col">Barrio</th>
+                          <th  class="columnasABMProductos" scope="col"></th>
+
+                        </tr>
+                      </thead>
+                      <tr>
+                          <td class="filasABMProductos">Ricardo Pedroni</td>
+                          <td class="filasABMProductos">1958</td>
+                          <td class="filasABMProductos">Cordoba</td>
+                          <td class="filasABMProductos">Cordoba</td>
+                          <td class="filasABMProductos">Villa Cabrera</td>
+                          <td class="filasABMProductos" align="right" >
+                            <button type="button" title="Editar" class="btn btn-success  icon-only btn_editar"><i class="fa fa-pencil"></i></button>
+                            <button  type="button" title="Eliminar" class="btn btn-danger icon-only btn_eliminar"><i class="fa fa-trash-o"></i></button>
+                          </td>
+
+                      </tr>
+                      <tr>
+                        <td class="filas text-center" colspan="6">
+
+                        <!-- Button trigger modal -->
+                        <a href="#"></a>
+                        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#staticBackdrop">
+                          Agregar Direccion
+                        </button>
+                        </td>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                            <form class="" action="index.html" method="post">
+                              <div class="modal-body">
+                                  <div class="form-row">
+                                      <div class="form-group col-md-8 text-left">
+                                        <label for="inputEmail4">Direccion</label>
+                                        <input type="text" class="form-control" id="inputEmail4">
+                                  </div>
+                                  <div class="form-group col-md-4 text-left">
+                                        <label for="inputPassword4">Numero</label>
+                                        <input type="text" class="form-control" id="inputPassword4">
+                                      </div>
+                                  </div>
+                                  <br>
+                                  <div class="form-row">
+                                      <div class="form-group col-md-6 text-left">
+                                        <label for="inputEmail4">Provincia</label>
+                                        <input type="text" class="form-control" id="inputEmail4">
+                                  </div>
+                                  <div class="form-group col-md-6 text-left">
+                                        <label for="inputPassword4">Localidad</label>
+                                        <input type="text" class="form-control" id="inputPassword4">
+                                      </div>
+                                  </div>
+
+                                  <div class="form-row">
+                                      <div class="form-group col-md-6 text-left">
+                                        <label for="inputEmail4">Barrio</label>
+                                        <input type="text" class="form-control" id="inputEmail4">
+                                  </div>
+                                  <div class="form-group col-md-6 text-left">
+                                        <label for="inputPassword4">Codigo Postal</label>
+                                        <input type="text" class="form-control" id="inputPassword4">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary">Agregar</button>
+                              </div>
+                            </form>
+                            </div>
+                          </div>
+                        </div>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+
+
+
                 <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+
                 <div class="invalid-feedback">
                   Porfavor ingrese su direccion actual.
                 </div>
