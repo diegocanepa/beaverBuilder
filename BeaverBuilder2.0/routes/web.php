@@ -43,11 +43,16 @@ Route::post('/BajaProducto', 'ProductosController@eliminarProducto')->name('Baja
 Route::post('/ModificarProducto', 'ProductosController@modificarProducto')->name('ModificarProducto');
 Route::post('/NuevoProducto', 'ProductosController@nuevoProducto')->name('NuevoProducto');
 
+
 Route::get('/perfilUsuario', 'PerfilUsuarioController@listadoComprasRealizadas')->name('perfilUsuario');
 
-Route::get('/perfilUsuarioEdit', function(){
-  return view('perfilUsuarioEdit');
-})->name('perfilUsuarioEdit');
+Route::get('/perfilUsuarioEdit', 'PerfilUsuarioController@informacionPerfilUsuarioEdit')->name('perfilUsuarioEdit');
+route::post('/editarDireccion', 'PerfilUsuarioController@editarDireccion')->name('editarDireccion');
+route::post('/eliminarDireccion', 'PerfilUsuarioController@eliminarDireccion')->name('eliminarDireccion');
+route::post('/agregarDireccion', 'PerfilUsuarioController@agregarDireccion')->name('agregarDireccion');
+route::post('/editarTarjeta', 'PerfilUsuarioController@editarTarjeta')->name('editarTarjeta');
+route::post('/eliminarTarjeta', 'PerfilUsuarioController@eliminarTarjeta')->name('eliminarTarjeta');
+route::post('/agregarTarjeta', 'PerfilUsuarioController@agregarTarjeta')->name('agregarTarjeta');
 
 
 Route::get('/resultadoCompra', function(){

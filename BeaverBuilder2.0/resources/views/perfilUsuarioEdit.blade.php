@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="mi-perfil">
   <div class="customer-form text-center">
       <div class="container">
         <div class="py-5 text-center">
@@ -9,7 +10,7 @@
 
         <div class="container">
           <div class="col-12 text-center" >
-            <input type="image" src="img/messi-perfil.jpg" value="" class="img imagen-perfil">
+
           </div>
         </div>
               <div class="mb-3">
@@ -33,41 +34,148 @@
                 </div>
               </div>
 
+              <div class="form-row">
+                  <div class="col-md-3 mb-3">
+                    <label for="tipoDoc">Tipo Documento</label>
+                    <select class="custom-select d-block w-100" id="tipoDoc" required>
+                      <option value="">Eliga...</option>
+                      <option>DNI</option>
+                      <option>Pasaporte</option>
+                    </select>
+                  </div>
+                  <div class="col-md-7 mb-3">
+                    <label for="numDoc">Documento</label>
+                    <input type="text" class="form-control" id="numDoc" value="" required>
+                  </div>
+              </div>
+
               <div class="mb-3">
                 <label for="address">Direcciones</label>
                 <table class="table table-striped table-sm">
                     <tbody>
                       <thead>
                         <tr>
-                          <th  class="columnasABMProductos" scope="col">Calle</th>
-                          <th  class="columnasABMProductos" scope="col">Numero</th>
-                          <th  class="columnasABMProductos" scope="col">Provincia</th>
-                          <th  class="columnasABMProductos" scope="col">Localidad</th>
-                          <th  class="columnasABMProductos" scope="col">Barrio</th>
-                          <th  class="columnasABMProductos" scope="col"></th>
-
+                          <th  class="" scope="col">Calle</th>
+                          <th  class="" scope="col">Numero</th>
+                          <th  class="" scope="col">Provincia</th>
+                          <th  class="" scope="col">Ciudad</th>
+                          <th  class="" scope="col">Barrio</th>
+                          <th  class="" scope="col"></th>
                         </tr>
                       </thead>
                       <tr>
-                          <td class="filasABMProductos">Ricardo Pedroni</td>
-                          <td class="filasABMProductos">1958</td>
-                          <td class="filasABMProductos">Cordoba</td>
-                          <td class="filasABMProductos">Cordoba</td>
-                          <td class="filasABMProductos">Villa Cabrera</td>
-                          <td class="filasABMProductos" align="right" >
-                            <button type="button" title="Editar" class="btn btn-success  icon-only btn_editar"><i class="fa fa-pencil"></i></button>
-                            <button  type="button" title="Eliminar" class="btn btn-danger icon-only btn_eliminar"><i class="fa fa-trash-o"></i></button>
-                          </td>
+                        @foreach ($direcciones as $i => $direccion)
+                          <td class="">{{$direccion['calle']}}</td>
+                          <td class="">{{$direccion['numero']}}</td>
+                          <td class="">{{$direccion['nombreProvincia']}}</td>
+                          <td class="">{{$direccion['nombreCiudad']}}</td>
+                          <td class="">{{$direccion['barrio']}}</td>
+                          <td class="" align="right" >
+                            <button type="button" title="Editar" class="btn btn-success  icon-only btn_editar" data-toggle="modal" data-target="#EditarDireccion-{{$i}}"><i class="fa fa-pencil"></i></button>
 
+                            <!-- Modal -->
+                            <div class="modal fade" id="EditarDireccion-{{$i}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                <form class="" action="{{ Route('editarDireccion')}}" method="post">
+                                  {{ csrf_field() }}
+                                  <div class="modal-body">
+                                      <div class="form-row">
+                                          <div class="form-group col-md-8 text-left">
+                                            <label for="inputEmail4">Direccion</label>
+                                            <input type="text" class="form-control" id="inputEmail4" name="calle" value="{{$direccion['calle']}}">
+                                      </div>
+                                      <div class="form-group col-md-4 text-left">
+                                            <label for="inputPassword4">Numero</label>
+                                            <input type="text" class="form-control" id="inputPassword4" name="numero" value="{{$direccion['numero']}}">
+                                          </div>
+                                      </div>
+                                      <br>
+                                      <div class="form-row">
+                                          <div class="form-group col-md-6 text-left">
+                                            <label for="pais">Pais</label>
+                                            <select class="custom-select d-block w-100" id="pais" required name="idPais">
+                                              <option value="{{$direccion['idPais']}}" selected>{{$direccion['nombrePais']}}</option>
+                                              @foreach ($paises as $pais)
+                                                <option value="{{$pais['idPais']}}">{{$pais['nombrePais']}}</option>
+                                              @endforeach
+                                            </select>
+                                          </div>
+                                      </div>
+                                      <div class="form-row">
+                                          <div class="form-group col-md-6 text-left">
+                                            <label for="provincia">Provincia</label>
+                                            <select class="custom-select d-block w-100" id="provincia" required name="idProvincia">
+                                              <option value="{{$direccion['idProvincia']}}" selected>{{$direccion['nombreProvincia']}}</option>
+                                              @foreach ($provincias as $provincia)
+                                                <option value="{{$provincia['idProvincia']}}">{{$provincia['nombreProvincia']}}</option>
+                                              @endforeach
+                                            </select>
+                                          </div>
+                                      <div class="form-group col-md-6 text-left">
+                                            <label for="cuidad">Cuidad</label>
+                                            <select class="custom-select d-block w-100" id="cuidad" required name="idCiudad">
+                                              <option value="{{$direccion['idCiudad']}}" selected>{{$direccion['nombreCiudad']}}</option>
+                                              @foreach ($ciudades as $ciudad)
+                                                <option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCiudad']}}</option>
+                                              @endforeach
+                                            </select>
+                                          </div>
+                                      </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                  </div>
+                                </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                            <!-- Button trigger modal -->
+                            <button  type="button" title="Eliminar" class="btn btn-danger icon-only btn_eliminar" data-toggle="modal" data-target="#EliminarDireccion-{{$i}}"><i class="fa fa-trash-o"></i></button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="EliminarDireccion-{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Direccion</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    ¿Esta seguro que desea eliminar este direccion?
+                                    <br>
+                                    Direccion: {{$direccion['calle']}}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <form class="" action="index.html" method="post">
+                                      {{ csrf_field() }}
+                                      <input type="hidden" name="" value="{{$direccion['id']}}">
+                                      <button type="button" class="btn btn-primary">Eliminar</button>
+                                    </form>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
                       </tr>
+                      @endforeach
                       <tr>
                         <td class="filas text-center" colspan="6">
-
                         <!-- Button trigger modal -->
-                        <a href="#"></a>
                         <button type="button" class="btn btn-link" data-toggle="modal" data-target="#staticBackdrop">
-                          Agregar Direccion
-                        </button>
+                            Agregar Direccion
+                          </button>
                         </td>
 
                         <!-- Modal -->
@@ -80,106 +188,244 @@
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
-                            <form class="" action="index.html" method="post">
+                            <form class="" action="{{ route('agregarDireccion')}}" method="post">
+                              {{ csrf_field() }}
                               <div class="modal-body">
                                   <div class="form-row">
                                       <div class="form-group col-md-8 text-left">
                                         <label for="inputEmail4">Direccion</label>
-                                        <input type="text" class="form-control" id="inputEmail4">
+                                        <input type="text" class="form-control" id="inputEmail4" name="calle">
                                   </div>
                                   <div class="form-group col-md-4 text-left">
                                         <label for="inputPassword4">Numero</label>
-                                        <input type="text" class="form-control" id="inputPassword4">
+                                        <input type="text" class="form-control" id="inputPassword4" name="numero">
                                       </div>
                                   </div>
                                   <br>
                                   <div class="form-row">
                                       <div class="form-group col-md-6 text-left">
-                                        <label for="inputEmail4">Provincia</label>
-                                        <input type="text" class="form-control" id="inputEmail4">
-                                  </div>
-                                  <div class="form-group col-md-6 text-left">
-                                        <label for="inputPassword4">Localidad</label>
-                                        <input type="text" class="form-control" id="inputPassword4">
+                                        <label for="pais">Pais</label>
+                                        <select class="custom-select d-block w-100" id="pais" required name="idPais">
+                                          @foreach ($paises as $pais)
+                                            <option value="{{$pais['idPais']}}">{{$pais['nombrePais']}}</option>
+                                          @endforeach
+                                        </select>
                                       </div>
                                   </div>
-
                                   <div class="form-row">
                                       <div class="form-group col-md-6 text-left">
-                                        <label for="inputEmail4">Barrio</label>
-                                        <input type="text" class="form-control" id="inputEmail4">
-                                  </div>
+                                        <label for="provincia">Provincia</label>
+                                        <select class="custom-select d-block w-100" id="provincia" required name="idProvincia">
+                                          @foreach ($provincias as $provincia)
+                                            <option value="{{$provincia['idProvincia']}}">{{$provincia['nombreProvincia']}}</option>
+                                          @endforeach
+                                        </select>
+                                      </div>
                                   <div class="form-group col-md-6 text-left">
-                                        <label for="inputPassword4">Codigo Postal</label>
-                                        <input type="text" class="form-control" id="inputPassword4">
+                                        <label for="cuidad">Ciudad</label>
+                                        <select class="custom-select d-block w-100" id="cuidad" required name="idCiudad">
+                                          @foreach ($ciudades as $ciudad)
+                                            <option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCiudad']}}</option>
+                                          @endforeach
+                                        </select>
                                       </div>
                                   </div>
-                              </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary">Agregar</button>
+                                <button type="submit" class="btn btn-primary">Agregar</button>
                               </div>
                             </form>
                             </div>
                           </div>
                         </div>
-                      </tr>
-
-                    </tbody>
-                  </table>
-
-
-
-
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-
-                <div class="invalid-feedback">
-                  Porfavor ingrese su direccion actual.
-                </div>
-              </div>
+                      </div>
+                    </tr>
+                  </tbody>
+                </table>
 
               <div class="mb-3">
-                <label for="address2">Dirección 2 <span class="text-muted">(Opcional)</span></label>
-                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-              </div>
+                <label for="address">Tarjetas</label>
+                <table class="table table-striped table-sm">
+                    <tbody>
+                      <thead>
+                        <tr>
+                          <th  class="columnasABMProductos" scope="col">Nombre</th>
+                          <th  class="columnasABMProductos" scope="col">Numero</th>
+                          <th  class="columnasABMProductos" scope="col">Fecha Vencimiento</th>
+                          <th  class="columnasABMProductos" scope="col"></th>
 
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="country">País</label>
-                  <select class="custom-select d-block w-100" id="country" required>
-                    <option value="">Eliga...</option>
-                    <option>Estados Unidos</option>
-                    <option>Argentina</option>
-                    <option>Bolivia</option>
-                    <option>Peru</option>
-                    <option>Ecudor</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Porfavor seleccione un pais valido.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="state">Cuidad</label>
-                  <select class="custom-select d-block w-100" id="state" required>
-                    <option value="">Eliga...</option>
-                    <option>California</option>
-                    <option>Cordoba</option>
-                    <option>Buenos Aires</option>
-                    <option>Rosario</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Porfavor seleccione una ciudad valido.
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="zip">Codigo Postal</label>
-                  <input type="text" class="form-control" id="zip" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Zip code required.
-                  </div>
-                </div>
-              </div>
+                        </tr>
+                      </thead>
+                      <tr>
+                        @foreach ($tarjetas as $i => $value)
+                          <td class="filasABMProductos">{{$value['nombre']}}</td>
+                          <td class="filasABMProductos">{{$value['nroTarjeta']}}</td>
+                          <td class="filasABMProductos">{{$value['fechaVencimiento']}}</td>
+                          <td class="filasABMProductos" align="right" >
+                              <button type="button" title="Editar" class="btn btn-success  icon-only btn_editar" data-toggle="modal" data-target="#EditarTarjeta"><i class="fa fa-pencil"></i></button>
 
+
+                              <!-- Modal -->
+                              <div class="modal fade" id="EditarTarjeta" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="staticBackdropLabel">Edicion de Tarjeta</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                  <form class="" action="index.html" method="post">
+                                    {{ csrf_field() }}
+                                    <div class="modal-body">
+                                      <div class="row">
+                                        <div class="col-md-12 text-left">
+                                          <label for="cc-name">Nombre de la tarjeta</label>
+                                          <input type="text" class="form-control" id="cc-name" placeholder="" required name="nombre" value="{{$value['nombre']}}">
+                                          <div class="invalid-feedback">
+                                            El nombre de la tarjeta es obligatorio.
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-12 text-left">
+                                          <label for="cc-number">Numero de la tarjeta</label>
+                                          <input type="text" class="form-control" id="cc-number" placeholder="" required name="nroTarjeta" value="{{$value['nroTarjeta']}}">
+                                          <div class="invalid-feedback">
+                                            El numero de la tarjeta es obligatorio.
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-6 text-left">
+                                          <label for="cc-expiration">Vencimiento</label>
+                                          <input type="date" class="form-control" id="cc-expiration" placeholder="" required name="fechaVencimiento" value="{{$value['fechaVencimiento']}}">
+                                          <div class="invalid-feedback">
+                                            Vencimiento obligatorio.
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3 text-left">
+                                          <label for="cc-cvv">CVV</label>
+                                          <input type="text" class="form-control" id="cc-cvv" placeholder="" required name="cvv" value="{{$value['cvv']}}">
+                                          <div class="invalid-feedback">
+                                            Codigo de seguridad obligatorio.
+                                          </div>
+                                        </div>
+                                      </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                      <button type="button" class="btn btn-primary">Agregar</button>
+                                    </div>
+                                  </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Button trigger modal -->
+                            <button  type="button" title="Eliminar" class="btn btn-danger icon-only btn_eliminar" data-toggle="modal" data-target="#eliminarTarjeta"><i class="fa fa-trash-o"></i></button>
+
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="eliminarTarjeta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    ¿Esta seguro que desea eliminar este tarjeta?
+                                    <br>
+                                    Numero de Tarjeta: {{$value['nroTarjeta']}}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <form class="" action="{{ route('eliminarTarjeta')}}" method="post">
+                                      {{ csrf_field() }}
+                                      <input type="hidden" name="id" value="{{$value['id']}}">
+                                      <button type="submit" class="btn btn-primary">Eliminar</button>
+                                    </form>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      @endforeach
+                      <tr>
+                        <td class="filas text-center" colspan="6">
+                        <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-link" data-toggle="modal" data-target="#AgregarTarjeta">
+                            Agregar Tarjeta
+                          </button>
+                        </td>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="AgregarTarjeta" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                            <form class="" action="{{ Route ('agregarTarjeta')}}" method="post">
+                              {{ csrf_field() }}
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col-md-12 text-left">
+                                    <label for="cc-name">Nombre de la tarjeta</label>
+                                    <input type="text" class="form-control" id="cc-name" placeholder="" required name="nombre">
+                                    <div class="invalid-feedback">
+                                      El nombre de la tarjeta es obligatorio.
+                                    </div>
+                                  </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-md-12 text-left">
+                                    <label for="cc-number">Numero de la tarjeta</label>
+                                    <input type="text" class="form-control" id="cc-number" placeholder="" required name="nroTarjeta">
+                                    <div class="invalid-feedback">
+                                      El numero de la tarjeta es obligatorio.
+                                    </div>
+                                  </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-md-6 text-left">
+                                    <label for="cc-expiration">Vencimiento</label>
+                                    <input type="date" class="form-control" id="cc-expiration" placeholder="" required name="fechaVencimiento">
+                                    <div class="invalid-feedback">
+                                      Vencimiento obligatorio.
+                                    </div>
+                                  </div>
+                                  <div class="col-md-3 mb-3 text-left">
+                                    <label for="cc-cvv">CVV</label>
+                                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required name="cvv">
+                                    <div class="invalid-feedback">
+                                      Codigo de seguridad obligatorio.
+                                    </div>
+                                  </div>
+                                </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Agregar</button>
+                              </div>
+                            </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </tr>
+                  </tbody>
+                </table>
 
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 p-2">
@@ -189,7 +435,11 @@
                   <button class="btn btn-primary  btn-block" type="submit">Cancelar</button>
                 </div>
               </div>
-            </form>
+
           </div>
-          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 @endsection

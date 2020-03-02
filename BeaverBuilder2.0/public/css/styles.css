@@ -709,7 +709,7 @@ li {
 }
 
 #customer-form {
-    background-color: #e6e6e6;
+    background: #fed136;
     border-radius: 8px;
     box-shadow: 0 0 40px -10px #000;
     padding: 5% 4rem;
@@ -813,6 +813,7 @@ li {
   margin-top: 5%;
   margin-bottom: 5%;
 }
+
 
 
 /* CARRITO DE COMPRAS */
