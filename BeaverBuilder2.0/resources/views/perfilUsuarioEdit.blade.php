@@ -85,12 +85,13 @@
                                   </div>
                                 <form class="" action="{{ Route('editarDireccion')}}" method="post">
                                   {{ csrf_field() }}
+                                  <input type="hidden" name="id" value="{{$direccion['id']}}">
                                   <div class="modal-body">
                                       <div class="form-row">
                                           <div class="form-group col-md-8 text-left">
                                             <label for="inputEmail4">Direccion</label>
                                             <input type="text" class="form-control" id="inputEmail4" name="calle" value="{{$direccion['calle']}}">
-                                      </div>
+                                          </div>
                                       <div class="form-group col-md-4 text-left">
                                             <label for="inputPassword4">Numero</label>
                                             <input type="text" class="form-control" id="inputPassword4" name="numero" value="{{$direccion['numero']}}">
@@ -107,8 +108,6 @@
                                               @endforeach
                                             </select>
                                           </div>
-                                      </div>
-                                      <div class="form-row">
                                           <div class="form-group col-md-6 text-left">
                                             <label for="provincia">Provincia</label>
                                             <select class="custom-select d-block w-100" id="provincia" required name="idProvincia">
@@ -118,7 +117,9 @@
                                               @endforeach
                                             </select>
                                           </div>
-                                      <div class="form-group col-md-6 text-left">
+                                      </div>
+                                      <div class="form-row">
+                                          <div class="form-group col-md-6 text-left">
                                             <label for="cuidad">Cuidad</label>
                                             <select class="custom-select d-block w-100" id="cuidad" required name="idCiudad">
                                               <option value="{{$direccion['idCiudad']}}" selected>{{$direccion['nombreCiudad']}}</option>
@@ -126,6 +127,10 @@
                                                 <option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCiudad']}}</option>
                                               @endforeach
                                             </select>
+                                          </div>
+                                          <div class="form-group col-md-6 text-left">
+                                            <label for="inputEmail4">Barrio</label>
+                                            <input type="text" class="form-control" id="inputEmail4" name="barrio" value="{{$direccion['barrio']}}">
                                           </div>
                                       </div>
                                   <div class="modal-footer">
@@ -150,17 +155,17 @@
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                   </div>
-                                  <div class="modal-body">
+                                  <div class="modal-body text-center">
                                     ¿Esta seguro que desea eliminar este direccion?
                                     <br>
                                     Direccion: {{$direccion['calle']}}
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <form class="" action="index.html" method="post">
+                                    <form class="" action="{{Route('eliminarDireccion')}}" method="post">
                                       {{ csrf_field() }}
-                                      <input type="hidden" name="" value="{{$direccion['id']}}">
-                                      <button type="button" class="btn btn-primary">Eliminar</button>
+                                      <input type="hidden" name="id" value="{{$direccion['id']}}">
+                                      <button type="submit" class="btn btn-primary">Eliminar</button>
                                     </form>
 
                                   </div>
@@ -173,13 +178,13 @@
                       <tr>
                         <td class="filas text-center" colspan="6">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#staticBackdrop">
+                        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#agregarDireccion">
                             Agregar Direccion
                           </button>
                         </td>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal fade" id="agregarDireccion" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -211,8 +216,6 @@
                                           @endforeach
                                         </select>
                                       </div>
-                                  </div>
-                                  <div class="form-row">
                                       <div class="form-group col-md-6 text-left">
                                         <label for="provincia">Provincia</label>
                                         <select class="custom-select d-block w-100" id="provincia" required name="idProvincia">
@@ -221,13 +224,20 @@
                                           @endforeach
                                         </select>
                                       </div>
-                                  <div class="form-group col-md-6 text-left">
+                                  </div>
+                                  <div class="form-row">
+                                      <div class="form-group col-md-6 text-left">
                                         <label for="cuidad">Ciudad</label>
                                         <select class="custom-select d-block w-100" id="cuidad" required name="idCiudad">
+                                          <option value="27291">Rio Cuarto</option>
                                           @foreach ($ciudades as $ciudad)
-                                            <option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCiudad']}}</option>
+                                            <!--<option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCiudad']}}</option>-->
                                           @endforeach
                                         </select>
+                                      </div>
+                                      <div class="form-group col-md-6 text-left">
+                                        <label for="inputEmail4">Barrio</label>
+                                        <input type="text" class="form-control" id="inputEmail4" name="barrio">
                                       </div>
                                   </div>
                               <div class="modal-footer">
@@ -262,11 +272,11 @@
                           <td class="filasABMProductos">{{$value['nroTarjeta']}}</td>
                           <td class="filasABMProductos">{{$value['fechaVencimiento']}}</td>
                           <td class="filasABMProductos" align="right" >
-                              <button type="button" title="Editar" class="btn btn-success  icon-only btn_editar" data-toggle="modal" data-target="#EditarTarjeta"><i class="fa fa-pencil"></i></button>
+                              <button type="button" title="Editar" class="btn btn-success  icon-only btn_editar" data-toggle="modal" data-target="#EditarTarjeta-{{$i}}"><i class="fa fa-pencil"></i></button>
 
 
                               <!-- Modal -->
-                              <div class="modal fade" id="EditarTarjeta" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal fade" id="EditarTarjeta-{{$i}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                   <div class="modal-content">
                                     <div class="modal-header">
@@ -275,25 +285,26 @@
                                         <span aria-hidden="true">&times;</span>
                                       </button>
                                     </div>
-                                  <form class="" action="index.html" method="post">
+                                  <form class="" action="{{ Route('editarTarjeta')}}" method="post">
                                     {{ csrf_field() }}
+                                    <input type="hidden" name="id" value="{{$value['id']}}">
                                     <div class="modal-body">
                                       <div class="row">
                                         <div class="col-md-12 text-left">
-                                          <label for="cc-name">Nombre de la tarjeta</label>
-                                          <input type="text" class="form-control" id="cc-name" placeholder="" required name="nombre" value="{{$value['nombre']}}">
+                                          <label for="cc-number">Numero de la tarjeta</label>
+                                          <input type="text" class="form-control" id="cc-number" placeholder="" required name="nroTarjeta" value="{{$value['nroTarjeta']}}" disabled>
                                           <div class="invalid-feedback">
-                                            El nombre de la tarjeta es obligatorio.
+                                            El numero de la tarjeta es obligatorio.
                                           </div>
                                         </div>
                                       </div>
                                       <br>
                                       <div class="row">
                                         <div class="col-md-12 text-left">
-                                          <label for="cc-number">Numero de la tarjeta</label>
-                                          <input type="text" class="form-control" id="cc-number" placeholder="" required name="nroTarjeta" value="{{$value['nroTarjeta']}}">
+                                          <label for="cc-name">Nombre de la tarjeta</label>
+                                          <input type="text" class="form-control" id="cc-name" placeholder="" required name="nombre" value="{{$value['nombre']}}">
                                           <div class="invalid-feedback">
-                                            El numero de la tarjeta es obligatorio.
+                                            El nombre de la tarjeta es obligatorio.
                                           </div>
                                         </div>
                                       </div>
@@ -316,7 +327,7 @@
                                       </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                      <button type="button" class="btn btn-primary">Agregar</button>
+                                      <button type="submit" class="btn btn-primary">Modificar</button>
                                     </div>
                                   </form>
                                   </div>
@@ -324,11 +335,11 @@
                               </div>
                             </div>
                             <!-- Button trigger modal -->
-                            <button  type="button" title="Eliminar" class="btn btn-danger icon-only btn_eliminar" data-toggle="modal" data-target="#eliminarTarjeta"><i class="fa fa-trash-o"></i></button>
+                            <button  type="button" title="Eliminar" class="btn btn-danger icon-only btn_eliminar" data-toggle="modal" data-target="#eliminarTarjeta-{{$i}}"><i class="fa fa-trash-o"></i></button>
 
 
                             <!-- Modal -->
-                            <div class="modal fade" id="eliminarTarjeta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="eliminarTarjeta-{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
@@ -337,7 +348,7 @@
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                   </div>
-                                  <div class="modal-body">
+                                  <div class="modal-body text-center">
                                     ¿Esta seguro que desea eliminar este tarjeta?
                                     <br>
                                     Numero de Tarjeta: {{$value['nroTarjeta']}}
