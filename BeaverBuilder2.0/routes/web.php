@@ -43,10 +43,11 @@ Route::post('/BajaProducto', 'ProductosController@eliminarProducto')->name('Baja
 Route::post('/ModificarProducto', 'ProductosController@modificarProducto')->name('ModificarProducto');
 Route::post('/NuevoProducto', 'ProductosController@nuevoProducto')->name('NuevoProducto');
 
-
+/*PERFIL DE USUARIO*/
 Route::get('/perfilUsuario', 'PerfilUsuarioController@listadoComprasRealizadas')->name('perfilUsuario');
-
+Route::post('/perfilUsuario', 'PerfilUsuarioController@cambiarImagenPerfil')->name('perfilUsuario');
 Route::get('/perfilUsuarioEdit', 'PerfilUsuarioController@informacionPerfilUsuarioEdit')->name('perfilUsuarioEdit');
+Route::post('/perfilUsuarioEdit', 'PerfilUsuarioController@actualizacionDatosPerfilUsuario')->name('perfilUsuarioEdit');
 route::post('/editarDireccion', 'PerfilUsuarioController@editarDireccion')->name('editarDireccion');
 route::post('/eliminarDireccion', 'PerfilUsuarioController@eliminarDireccion')->name('eliminarDireccion');
 route::post('/agregarDireccion', 'PerfilUsuarioController@agregarDireccion')->name('agregarDireccion');

@@ -7,11 +7,11 @@
         <div class="teacher-name pt-3">
           <div class="row" id="row">
           <div class="col-sm-9">
-            <h2><strong>Rick Sanchez</strong></h2>
+            <h2><strong>{{auth()->user()->name}}</strong></h2>
           </div>
           <div class="col-sm-3">
             <div class="button pull-right float-right">
-              <a href="{{ Route('perfilUsuarioEdit') }}" class="btn btn-outline-success btn-sm">Edit Profile <i class="fa fa-pencil"></i></a>
+              <a href="{{ Route('perfilUsuarioEdit') }}" class="btn btn-outline-success btn-sm">Editar Perfil  <i class="fa fa-pencil"></i></a>
             </div>
           </div>
           </div>
@@ -19,19 +19,38 @@
 
         <div class="row" id="row" style="margin-top:20px;">
           <div class="col-sm-3">
-            <a href="#"> <img class="rounded-circle" src="//images.weserv.nl/?url=i.imgur.com/Md9jS0Ib.jpg" alt="Rick" ></a>
+            <div class="profile">
+                <img id="blah" src="{{auth()->user()->imagen}}">
+              <div class="overlay">
+                <form class="" action="{{ Route('perfilUsuario')}}" method="post" enctype="multipart/form-data">
+                  {{ csrf_field() }}
+                  <input id="imgInp" type="file" name="imagen">
+                  <p>Cambiar Imagen</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-link">Actualizar</button>
+              </div>
+
+              </form>
           </div>
 
           <div class="col-sm-6">
-            <h5Associate Professor, <small>Dept. of Alien Agriculture, Jaarvlar-3 University</small></h5>
-            <p>PhD on Molecular Shwanky Physics</p>
-            <p>Address: 123 Cuba str Tampa, Fl, Earth 137</p>
+            <h6>Una mejor forma de administrar tu cuenta, <small>{{auth()->user()->name}}</small></h6>
+
+            <span class="number">Email: <strong>{{auth()->user()->email}}</strong></span>
+            <br>
+            <span class="number">Rol: <strong>{{$rolPersona['nombreRol']}}</strong></span>
+            <br>
+            @if ($documentoPersona)
+              <span class="number">{{$documentoPersona['nombreDoc']}}: <strong>{{auth()->user()->nroDocumento}}</strong></span>
+            @endif
+
           </div>
 
           <div class="col-sm-3 text-center social">
-            <span class="number">Phone:<strong>+0001732226402</strong></span>
             <div class="button-email">
-              <a href="mailto:arick@yahoo.com" class="btn btn-outline-success btn-block"><i class="fa fa-envelope-o"></i> Send Email</a>
+              <a href="mailto:diego_canepa241198@gmail.com" class="btn btn-outline-success btn-block"><i class="fa fa-envelope-o"></i>  Enviar mail</a>
             </div>
             <div class="social-icons">
               <a href="#">

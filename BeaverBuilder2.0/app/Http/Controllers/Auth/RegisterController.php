@@ -64,11 +64,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if($_FILES['imagen']['error'] != 0){
+          dd('Hubo un error');
+        }
+        else {
+          $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
+          if ($ext != 'jpg' &&  $ext != 'jpeg' && $ext != 'png') {
+            dd('formatoIncorrecto');
+          }
+          else {
+            $ubicacionArchivo = 'ImagenesPerfil/imagen'. $data['email'] . '.'.$ext;
+            move_uploaded_file($_FILES['imagen']['tmp_name'], $ubicacionArchivo);
+          }
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'imagen' => $data['imagen'],
+            'imagen' => $ubicacionArchivo,
         ]);
     }
 }

@@ -49,7 +49,7 @@
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form class="" action="{{ Route('NuevoProducto')}}" method="post">
+                      <form class="" action="{{ Route('NuevoProducto')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row">
                           <div class="form-group col-md-6">

@@ -13,13 +13,14 @@
 
           </div>
         </div>
+            <form class="" action="{{ Route('perfilUsuarioEdit') }}" method="post">
               <div class="mb-3">
                 <label for="username">Nombre de Usuario</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">@</span>
                   </div>
-                  <input type="text" class="form-control" id="username" placeholder="Username" required>
+                  <input type="text" class="form-control" id="username" placeholder="Username" name="name" required value="{{auth()->user()->name}}">
                   <div class="invalid-feedback" style="width: 100%;">
                     Campo Obligatorio
                   </div>
@@ -28,7 +29,7 @@
 
               <div class="mb-3">
                 <label for="email">Email <span class="text-muted">(Campo Obligatorio)</span></label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email" value="{{auth()->user()->email}}">
                 <div class="invalid-feedback">
                   Porfavor ingrese un email valido.
                 </div>
@@ -37,15 +38,16 @@
               <div class="form-row">
                   <div class="col-md-3 mb-3">
                     <label for="tipoDoc">Tipo Documento</label>
-                    <select class="custom-select d-block w-100" id="tipoDoc" required>
-                      <option value="">Eliga...</option>
-                      <option>DNI</option>
-                      <option>Pasaporte</option>
+                    <select class="custom-select d-block w-100" id="tipoDoc" required name="nombreDocumento">
+                      <option value="{{$documentoPersona['idTipoDocumento']}}" selected>{{$documentoPersona['nombreDoc']}}</option>
+                      @foreach ($documentos as  $documento)
+                        <option value="{{$documento['idTipoDocumento']}}">{{$documento['nombreDoc']}}</option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="col-md-7 mb-3">
                     <label for="numDoc">Documento</label>
-                    <input type="text" class="form-control" id="numDoc" value="" required>
+                    <input type="text" class="form-control" id="nroDocumento" name="nroDocumento" value="{{auth()->user()->nroDocumento}}" required>
                   </div>
               </div>
 
@@ -122,9 +124,9 @@
                                           <div class="form-group col-md-6 text-left">
                                             <label for="cuidad">Cuidad</label>
                                             <select class="custom-select d-block w-100" id="cuidad" required name="idCiudad">
-                                              <option value="{{$direccion['idCiudad']}}" selected>{{$direccion['nombreCiudad']}}</option>
+                                              <option value="{{$direccion['Ciudad_idCiudad ']}}" selected>{{$direccion['nombreCuidad']}}</option>
                                               @foreach ($ciudades as $ciudad)
-                                                <option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCiudad']}}</option>
+                                                <option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCuidad']}}</option>
                                               @endforeach
                                             </select>
                                           </div>
@@ -229,9 +231,8 @@
                                       <div class="form-group col-md-6 text-left">
                                         <label for="cuidad">Ciudad</label>
                                         <select class="custom-select d-block w-100" id="cuidad" required name="idCiudad">
-                                          <option value="27291">Rio Cuarto</option>
                                           @foreach ($ciudades as $ciudad)
-                                            <!--<option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCiudad']}}</option>-->
+                                            <option value="{{$ciudad['idCiudad']}}">{{$ciudad['nombreCuidad']}}</option>
                                           @endforeach
                                         </select>
                                       </div>
@@ -446,6 +447,8 @@
                   <button class="btn btn-primary  btn-block" type="submit">Cancelar</button>
                 </div>
               </div>
+
+            </form>
 
           </div>
         </div>
