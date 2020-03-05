@@ -60,3 +60,6 @@ route::post('/agregarDireccion', 'PerfilUsuarioController@agregarDireccion')->na
 route::post('/editarTarjeta', 'PerfilUsuarioController@editarTarjeta')->name('editarTarjeta');
 route::post('/eliminarTarjeta', 'PerfilUsuarioController@eliminarTarjeta')->name('eliminarTarjeta');
 route::post('/agregarTarjeta', 'PerfilUsuarioController@agregarTarjeta')->name('agregarTarjeta');
+
+// FAQS
+Route::get("/faqs", function(){return view("Faqs");});
