@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="body-carrito">
   <div class="container-carrito">
       <div class="row">
         <div class="col-12">
@@ -36,7 +37,7 @@
                           <th width="20%" class="columnas" scope="col"></th>
                         </tr>
                       </thead>
-                      @foreach ($productosCarrito as $productoCarrito)
+                      @foreach ($productosCarrito as $i => $productoCarrito)
                         <tr>
                           <td class="filas" >
                             <div class="container p-0">
@@ -53,7 +54,7 @@
                           </td>
                           <td class="filas"> {{ "$".$productoCarrito["precio"] }}</td>
                           <td class="filas">
-                              <input type="number" class="qty form-control" id="input-qty" name="qty" maxlength="2" value="1" >
+                              <input type="number" class="qty form-control" id="qty" name="qty" maxlength="2" value="1">
                           </td>
                           <td class="filas">{{ "$".$productoCarrito["precio"] }}</td>
                           <td class="filas"><a href="/eliminar/{{ $productoCarrito["idProductos"] }}">Eliminar<img src="img/eliminar-icono.png" alt=""></a></td>
@@ -89,7 +90,11 @@
                           </div>
                           <button type="submit" class="btn btn-primary">Aplicar</button>
                         </form>
+                        @if ($texto ?? '')
+                          <p>{{$texto ?? ''}}</p>
+                        @endif
                       </td>
+                    </tr>
                     <tr>
                       <th class="pt-4">Total</th>
                       <td class="pt-4 text-right h3 font-weight-normal">{{"$".$total}}</td>
@@ -114,17 +119,43 @@
                           <div class="modal-body">
                             <table class="table table-hover" width="100%">
                               <tbody>
+                                @foreach ($tarjetas as $tarjeta)
+                                  <tr>
+                                    <td class="filas" >
+                                      <div class="container p-0">
+                                        <div class="row">
+                                          <div class="col-lg-3  imagen-producto-carrito">
+                                            <i class="fa fa-credit-card-alt fa-5x" aria-hidden="true"></i>
+                                          </div>
+                                          <div class="col-lg-8 p-0 informacion-producto-carrito">
+                                            <h6>Terminada en {{substr($tarjeta['nroTarjeta'],-4)}}</h6>
+                                            <p>{{$tarjeta['nombre']}}</p>
+                                            <p>Vencimiento: {{$tarjeta['fechaVencimiento']}}</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td class="filas text-right">
+                                      <form class="" action="{{ Route ('resultadoCompra') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$tarjeta['id']}}">
+                                        <input type="hidden" name="totalCompra" value="{{ $total }}">
+                                        <input type="hidden" name="subtotalCompra" value="{{ $subtotal }}">
+                                        <input type="hidden" name="productosCarrito" value="{{ $productosCarrito }}">
+                                        <button type="submit" class="btn btn-dark">Seleccionar</button>
+                                      </form>
+                                    </td>
+                                  </tr>
+                                @endforeach
                                 <tr>
                                   <td class="filas" >
                                     <div class="container p-0">
                                       <div class="row">
-                                        <div class="col-lg-4 p-0 imagen-producto-carrito">
-                                          <img src="img/ceramica5.jpg" alt="">
+                                        <div class="col-lg-3  imagen-producto-carrito">
+                                          <i class="fa fa-money fa-5x" aria-hidden="true"></i>
                                         </div>
-                                        <div class="col-lg-8 p-0 informacion-producto-carrito">
-                                          <h6>Terminada en 5585</h6>
-                                          <p>Mastercard</p>
-                                          <p>Vencimiento: 04/2029</p>
+                                        <div class="col-lg-8 p-0 pt-4 informacion-producto-carrito">
+                                          <h6>Pago en Efectivo</h6>
                                         </div>
                                       </div>
                                     </div>
@@ -132,54 +163,16 @@
                                   <td class="filas text-right">
                                     <form class="" action="{{ Route ('resultadoCompra') }}" method="post">
                                       @csrf
-                                      <input type="hidden" name="nombreTarjeta" value="Mastercard">
-                                      <input type="hidden" name="codigoTarjeta" value="112233">
+                                      <input type="hidden" name="nombreTarjeta" value="{{$tarjeta['nombre']}}">
+                                      <input type="hidden" name="codigoTarjeta" value="{{$tarjeta['nroTarjeta']}}">
                                       <input type="hidden" name="totalCompra" value="{{ $total }}">
                                       <input type="hidden" name="subtotalCompra" value="{{ $subtotal }}">
                                       <input type="hidden" name="productosCarrito" value="{{ $productosCarrito }}">
                                       <button type="submit" class="btn btn-dark">Seleccionar</button>
                                     </form>
+                                  </td>
+                                </tr>
 
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td class="filas" >
-                                    <div class="container p-0">
-                                      <div class="row">
-                                        <div class="col-lg-4 p-0 imagen-producto-carrito">
-                                          <img src="img/ceramica5.jpg" alt="">
-                                        </div>
-                                        <div class="col-lg-8 p-0 informacion-producto-carrito">
-                                          <h6>Terminada en 5585</h6>
-                                          <p>Mastercard</p>
-                                          <p>Vencimiento: 04/2029</p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td class="filas text-right">
-                                    <button type="button" class="btn btn-dark">Seleccionar</button>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td class="filas" >
-                                    <div class="container p-0">
-                                      <div class="row">
-                                        <div class="col-lg-4 p-0 imagen-producto-carrito">
-                                          <img src="img/ceramica5.jpg" alt="">
-                                        </div>
-                                        <div class="col-lg-8 p-0 informacion-producto-carrito">
-                                          <h6>Terminada en 5585</h6>
-                                          <p>Mastercard</p>
-                                          <p>Vencimiento: 04/2029</p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td class="filas text-right">
-                                    <button type="button" class="btn btn-dark">Seleccionar</button>
-                                  </td>
-                                </tr>
                               </tbody>
                             </table>
                           </div>
@@ -195,5 +188,6 @@
             </div>
           </div>
       @endif
-  </div>
+  </div>  
+</div>
 @endsection

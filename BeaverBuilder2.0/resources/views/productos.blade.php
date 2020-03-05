@@ -15,7 +15,7 @@
 
   <div class="container">
     <div class="row">
-      <ul class="text-center">
+      <ul class="ul-filtros">
         <div class="col-lg-3">
           <li class="booking-card" style="background-image: url(https://lh3.googleusercontent.com/proxy/jafRnek363XmTx8axxTXFBrhaYRjGNI1FsKZaXxoOKf_0vT3ov7FeTlmjaUjEBXjt6TPIO0ZuNt5Xp520Kq70af0fp6PbS-tYzWQRcuwTi5wipb8T9N8BRg);">
             <div class="book-container">

@@ -91,7 +91,7 @@
             </div>
             <div class="col-md-8">
               <div class="card card-register text-center mt-2 pt-1">
-                <p>¿Tienes una cuenta? <a href="#">Inicia sesión</a></p>
+                <p>¿Tienes una cuenta? <a href="{{ route('login') }}">Inicia sesión</a></p>
               </div>
 
             </div>

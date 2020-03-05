@@ -11,14 +11,17 @@ use App\Pais;
 use App\TipoDocumento;
 use App\User;
 use App\Rol;
-
+use App\Pedido;
+use App\DetallePedido;
 
 class PerfilUsuarioController extends Controller
 {
     public function listadoComprasRealizadas(){
       $rolPersona = Rol::find(auth()->user()->rol);
       $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
-      $vac = compact('documentoPersona', 'rolPersona');
+      $comprasRealizadas = Pedido::Where('User_idUser', '=', auth()->user()->id)->get();
+
+      $vac = compact('documentoPersona', 'rolPersona', 'comprasRealizadas');
       return view('perfilUsuario', $vac);
     }
 
@@ -70,7 +73,6 @@ class PerfilUsuarioController extends Controller
       $documentos = TipoDocumento::all();
       $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
       $rolPersona = Rol::find(auth()->user()->rol);
-      dd($rolPersona);
       $ciudades = Ciudad::all();
       $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
       return view('perfilUsuarioEdit', $vac);
@@ -109,8 +111,10 @@ class PerfilUsuarioController extends Controller
       $paises = Pais::all();
       $provincias = Provincia::all();
       $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
       return view('perfilUsuarioEdit', $vac);
     }
 
@@ -128,8 +132,10 @@ class PerfilUsuarioController extends Controller
       $paises = Pais::all();
       $provincias = Provincia::all();
       $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
       return view('perfilUsuarioEdit', $vac);
     }
 
@@ -160,8 +166,10 @@ class PerfilUsuarioController extends Controller
       $paises = Pais::all();
       $provincias = Provincia::all();
       $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
       return view('perfilUsuarioEdit', $vac);
     }
 
@@ -190,8 +198,10 @@ class PerfilUsuarioController extends Controller
       $paises = Pais::all();
       $provincias = Provincia::all();
       $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
       return view('perfilUsuarioEdit', $vac);
 
     }
@@ -214,8 +224,10 @@ class PerfilUsuarioController extends Controller
       $paises = Pais::all();
       $provincias = Provincia::all();
       $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
       return view('perfilUsuarioEdit', $vac);
     }
 
@@ -241,8 +253,10 @@ class PerfilUsuarioController extends Controller
       $paises = Pais::all();
       $provincias = Provincia::all();
       $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
       return view('perfilUsuarioEdit', $vac);
 
     }

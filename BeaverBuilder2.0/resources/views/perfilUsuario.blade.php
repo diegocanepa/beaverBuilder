@@ -80,26 +80,30 @@
       </div>
     </header>
     <div class="container">
-
-      <div class="row pb-10" id="row">
-          <div class="col-sm-12">
-            <div class="card card-block text-xs-left p-3" id="card">
-              <h5><i class="fa fa-user fa-fw"></i>Biography</h5>
-
-                <p>Rick Sanchez C-137 is the father of Beth Smith, and the grandfather of Morty and Summer Smith. Aged 60 years old, he is said to have been away from the family for around fourteen years prior to the events of the show's first episode, "Pilot". He frequently travels on adventures through space and other planets and dimensions with his grandson Morty.</p>
+      <div class="row">
+        @foreach ($comprasRealizadas as $compra)
+            <div class="col-md-4 pt-3">
+              <div class="card mb-4 shadow-sm">
+                <i class="fa fa-shopping-cart fa-2x p-2 fluid" aria-hidden="true"></i>
+                <div class="card-body">
+                  <h4 class="card-title"><strong>Nro Compra: {{$compra['idPedido']}}</strong></h4>
+                  <p class="card-text">Esto es un resumen de la compra realizada el dia <strong>{{substr($compra['fechaPedido'],0,10)}}</strong></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><span><strong>Importe: </strong> {{$compra['total']}}</span></li>
+                  <li class="list-group-item"><span><strong>Descuento: </strong>@if ($compra['descuento_codigoDescuento'])SI @else NO @endif</span><br></li>
+                  <li class="list-group-item"><span><strong>Importe: </strong> {{$compra['total']}}</span></li>
+                </ul>
+                <div class="card-body">
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-outline-success">Ver mas</button>
+                    <button type="button" class="btn btn-outline-info">Seguir Envio</button>
+                  </div>
+                </div>
               </div>
-          </div>
-      </div>
-
-      <div class="row" id="row">
-          <div class="col-sm-12 pb-10">
-            <div class="card card-block text-xs-left p-3" id="card">
-              <h5><i class="fa fa-user fa-fw"></i>Biography</h5>
-
-                <p>Rick Sanchez C-137 is the father of Beth Smith, and the grandfather of Morty and Summer Smith. Aged 60 years old, he is said to have been away from the family for around fourteen years prior to the events of the show's first episode, "Pilot". He frequently travels on adventures through space and other planets and dimensions with his grandson Morty.</p>
-              </div>
-          </div>
-      </div>
+            </div>
+        @endforeach
+    </div>
 
 
   </div>

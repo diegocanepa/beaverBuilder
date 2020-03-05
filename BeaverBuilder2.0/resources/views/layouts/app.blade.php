@@ -15,7 +15,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
     <link href="/css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="/css/animation.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.5/assets/owl.carousel.min.css'>
 
     <!-- Icons -->
@@ -29,7 +29,6 @@
     <link rel="icon" href=" https://assets.jumpseller.com/store/bootstrap/themes/215975/favicon.png?1571644467 ">
 </head>
 <body>
-
 @if (auth::guest())
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fadeInDown" id="navbar-respon">
               <div class="container">
@@ -105,7 +104,9 @@
                               </div>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" id="nav-li-carrito" href="{{ route ('carritoCompras') }}"><img id="carrito-compras-img" src="/Iconos/carrito-compras2.png" alt=""></a>
+                              <a class="nav-link" id="nav-li-carrito" href="{{ route ('carritoCompras') }}"><img id="carrito-compras-img" src="/Iconos/carrito-compras2.png" alt="">
+                                
+                              </a>
                           </li>
                       </ul>
                     </div>
@@ -244,7 +245,7 @@
               </div>
       </footer>
 @endguest
-
+  <script src="/js/script.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>

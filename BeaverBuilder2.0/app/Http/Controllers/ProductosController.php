@@ -30,9 +30,14 @@ class ProductosController extends Controller
     {
       session_start();
       $_SESSION['carrito'][]=$id;
-      //$productos = Producto::whereIn('idProductos', $_SESSION['carrito'])->get();
-      //dd($productos);
+
       return redirect ('productos');
+    }
+
+    public function agregarEnDetalle($id){
+      session_start();
+      $_SESSION['carrito'][]=$id;
+      return redirect ('productos/'.$id);
     }
 
     /**
@@ -146,53 +151,7 @@ class ProductosController extends Controller
       return view ('ABMProductos', $vac);
     }
 
-    public function listadoProductosCarrito(){
-      session_start();
-      $productosCarrito = Producto::whereIn('idProductos', $_SESSION['carrito'])->get();
-      $subtotal = 0;
-      foreach ($productosCarrito as $productoCarrito) {
-        $subtotal = $subtotal + $productoCarrito['precio'];
-      }
-      $total = $subtotal;
-      $vac = compact('productosCarrito', 'subtotal', 'total');
-      return view('carritoCompras', $vac);
-    }
 
-    public function calculoCodigoDescuento(Request $codigoDescuento){
-      session_start();
-      $productosCarrito = Producto::whereIn('idProductos', $_SESSION['carrito'])->get();
-      $subtotal = 0;
-      foreach ($productosCarrito as $productoCarrito) {
-        $subtotal = $subtotal + $productoCarrito['precio'];
-      }
-      $descuento = null;
-      $descuento = Descuento::Where('codigoDescuento', '=', $codigoDescuento['codigoDescuento'])->where('fechaInicio', '<', date('Y-m-d'))->where('fechaFin', '>', date('Y-m-d'))->get();
-      $total = $subtotal;
-      if ($descuento != null){
-        $total = $total - ($total * $descuento->porcentaje / 100);
-      }
-      $vac = compact('productosCarrito', 'subtotal', 'total');
-      return view('carritoCompras', $vac);
-    }
-
-    public function eliminarProdCarrito($id){
-      session_start();
-      $arrayTemporal = $_SESSION['carrito'];
-      $_SESSION['carrito'] = [];
-      foreach ($arrayTemporal as $valor) {
-        if ($valor != $id){
-          $_SESSION['carrito'][] = $valor;
-        }
-      }
-      $productosCarrito = Producto::whereIn('idProductos', $_SESSION['carrito'])->get();
-      $subtotal = 0;
-      foreach ($productosCarrito as $productoCarrito) {
-        $subtotal = $subtotal + $productoCarrito['precio'];
-      }
-      $total = $subtotal;
-      $vac = compact('productosCarrito', 'subtotal', 'total');
-      return view('carritoCompras', $vac);
-    }
 
     public function eliminarProducto(Request $codigoProducto){
       $producto = Producto::find($codigoProducto['idProducto']);
@@ -236,18 +195,40 @@ class ProductosController extends Controller
     }
 
     public function nuevoProducto(Request $datosProd){
+
+
       $producto = Producto::where('codigo','=',$datosProd['codigo'])->get();
       if ($producto->isEmpty()) {
-        dd($datosProd['oferta']);
+
+        if($_FILES['imagen']['error'] != 0){
+          dd('Hubo un error');
+        }
+        else {
+          $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
+          if ($ext != 'jpg' &&  $ext != 'jpeg' && $ext != 'png') {
+            dd('formatoIncorrecto');
+          }
+          else {
+            $ubicacionArchivo = 'Imagenes/imagen'. $datosProd['codigo'] . '.'.$ext;
+            move_uploaded_file($_FILES['imagen']['tmp_name'], $ubicacionArchivo);
+          }
+        }
+
         $producto = new Producto();
         $producto->codigo = $datosProd['codigo'];
         $producto->nombre = $datosProd['nombre'];
-        $producto->imagen = $datosProd['imagen'];
+        $producto->imagen = $ubicacionArchivo;
         $producto->descripcion = $datosProd['descripcion'];
         $producto->precio = $datosProd['precio'];
         $producto->Categoria_idCategoria = $datosProd['categoria'];
         $producto->Marca_idMarca = $datosProd['marca'];
-        /*$producto->oferta = $datosProd['oferta'];*/
+
+        if ($datosProd['oferta'] = 'on') {
+          $producto->oferta = 'S';
+        }else {
+          $producto->oferta = 'N';
+        }
+
         $producto->stock = $datosProd['stock'];
 
         $producto->save();

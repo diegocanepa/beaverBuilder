@@ -39,7 +39,9 @@
                   <div class="col-md-3 mb-3">
                     <label for="tipoDoc">Tipo Documento</label>
                     <select class="custom-select d-block w-100" id="tipoDoc" required name="nombreDocumento">
-                      <option value="{{$documentoPersona['idTipoDocumento']}}" selected>{{$documentoPersona['nombreDoc']}}</option>
+                      @if ($documentoPersona)
+                        <option value="{{$documentoPersona['idTipoDocumento']}}" selected>{{$documentoPersona['nombreDoc']}}</option>
+                      @endif
                       @foreach ($documentos as  $documento)
                         <option value="{{$documento['idTipoDocumento']}}">{{$documento['nombreDoc']}}</option>
                       @endforeach
@@ -47,7 +49,7 @@
                   </div>
                   <div class="col-md-7 mb-3">
                     <label for="numDoc">Documento</label>
-                    <input type="text" class="form-control" id="nroDocumento" name="nroDocumento" value="{{auth()->user()->nroDocumento}}" required>
+                    <input type="text" class="form-control" id="nroDocumento" name="nroDocumento" value="{{auth()->user()->nroDocumento}}">
                   </div>
               </div>
 
@@ -202,11 +204,11 @@
                                       <div class="form-group col-md-8 text-left">
                                         <label for="inputEmail4">Direccion</label>
                                         <input type="text" class="form-control" id="inputEmail4" name="calle">
-                                  </div>
+                                      </div>
                                   <div class="form-group col-md-4 text-left">
                                         <label for="inputPassword4">Numero</label>
                                         <input type="text" class="form-control" id="inputPassword4" name="numero">
-                                      </div>
+                                  </div>
                                   </div>
                                   <br>
                                   <div class="form-row">
