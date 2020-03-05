@@ -132,13 +132,14 @@ class carritoComprasController extends Controller
         $pedido->Cobro_idCobro = $cobro->idCobro;
         $pedido->EstadoPedido_idEstadoPedido = 1;
         $pedido->save();
+  
+        $_SESSION['descuento']['codigoDescuento'] = null;
+        $_SESSION['carrito'] = [];
 
       } catch (\Exception $e) {
         $booleano = false;
       }
 
-      $_SESSION['descuento'] = [];
-      $_SESSION['carrito'] = [];
 
 
       $vac = compact('booleano');
@@ -154,7 +155,7 @@ class carritoComprasController extends Controller
       }
       $tarjetas = Tarjeta::Where('users_id', '=', auth()->user()->id)->get();
       $total = $subtotal;
-      $_SESSION['descuento'] = [];
+      $_SESSION['descuento']['codigoDescuento'] = null;
       $vac = compact('productosCarrito', 'subtotal', 'total', 'tarjetas');
       return view('carritoCompras', $vac);
     }

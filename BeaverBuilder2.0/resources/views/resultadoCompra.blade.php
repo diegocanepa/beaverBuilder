@@ -14,7 +14,7 @@
             <img src="/Iconos/compraDefectuosa.png" alt="">
             <h1>¡Lo sentimos, ha ocurrido un error en el pago!</h1>
             <h4>Vuelve a intentarlo o usa otro método de pago</h4>
-            <a href="#">volver al carrito</a>
+            <a href="{{ route ('carritoCompras') }}">volver al carrito</a>
           @endif
         </div>
       </div>

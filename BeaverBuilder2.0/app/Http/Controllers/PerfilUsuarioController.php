@@ -26,40 +26,51 @@ class PerfilUsuarioController extends Controller
     }
 
     public function cambiarImagenPerfil(){
-      if($_FILES['imagen']['error'] != 0){
-        dd('Hubo un error');
-      }
-      else {
-        $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
-        if ($ext != 'jpg' &&  $ext != 'jpeg' && $ext != 'png') {
-          dd('formatoIncorrecto');
+      $consulta = ' ';
+      try {
+        if($_FILES['imagen']['error'] != 0){
+          $consulta = 'Asegurese de haber cargado la imagen correctamente';
         }
         else {
-          $ubicacionArchivo = 'ImagenesPerfil/imagen'. auth()->user()->email . '.'.$ext;
-          move_uploaded_file($_FILES['imagen']['tmp_name'], $ubicacionArchivo);
+          $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
+          if ($ext != 'jpg' &&  $ext != 'jpeg' && $ext != 'png') {
+            $consulta = 'El formato de la imagen es incorrecto. Debe ser JPG, JPEG o PNG';
+          }
+          else {
+            $ubicacionArchivo = 'ImagenesPerfil/imagen'. auth()->user()->email . '.'.$ext;
+            move_uploaded_file($_FILES['imagen']['tmp_name'], $ubicacionArchivo);
+          }
         }
+
+        auth()->user()->imagen = $ubicacionArchivo;
+        auth()->user()->save();
+
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
       }
-
-      auth()->user()->imagen = $ubicacionArchivo;
-      auth()->user()->save();
-
 
       $rolPersona = Rol::find(auth()->user()->rol);
       $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
-      $vac = compact('documentoPersona', 'rolPersona');
+      $vac = compact('documentoPersona', 'rolPersona', 'consulta');
       return view('perfilUsuario', $vac);
     }
 
 
 
     public function actualizacionDatosPerfilUsuario(Request $request){
-      $usuario = User::find(auth()->user()->id);
+      $consulta = ' ';
+      try {
+        $usuario = User::find(auth()->user()->id);
 
-      $usuario->name = $request['name'];
-      $usuario->email = $request['email'];
-      $usuario->tipoDoc_idDoc = $request['nombreDocumento'];
-      $usuario->nroDocumento = $request['nroDocumento'];
-      $usuario->save();
+        $usuario->name = $request['name'];
+        $usuario->email = $request['email'];
+        $usuario->tipoDoc_idDoc = $request['nombreDocumento'];
+        $usuario->nroDocumento = $request['nroDocumento'];
+        $usuario->save();
+
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
+      }
 
 
       $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
@@ -74,13 +85,14 @@ class PerfilUsuarioController extends Controller
       $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
       $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona', 'consulta');
       return view('perfilUsuarioEdit', $vac);
     }
 
 
 
     public function informacionPerfilUsuarioEdit(){
+      $consulta = ' ';
       $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
       $direcciones = Direccion::Join('ciudad', 'direccion.Ciudad_idCiudad', '=', 'ciudad.idCiudad')
                                 ->Join('provincia', 'ciudad.Provincia_idProvincia', '=', 'provincia.idProvincia')
@@ -93,7 +105,7 @@ class PerfilUsuarioController extends Controller
       $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
       $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona', 'consulta');
       return view('perfilUsuarioEdit', $vac);
     }
 

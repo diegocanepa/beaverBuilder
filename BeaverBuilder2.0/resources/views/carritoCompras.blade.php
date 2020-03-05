@@ -9,7 +9,7 @@
         </div>
       </div>
       @if (count($productosCarrito) == 0)
-          <div class="row">
+          <div class="row p-3">
             <div class="contenedor-sin-productos col-12">
               <div class="texto-carrito-sin-productos">
                 <h2>Tu carrito está vacío</h2>
@@ -163,8 +163,8 @@
                                   <td class="filas text-right">
                                     <form class="" action="{{ Route ('resultadoCompra') }}" method="post">
                                       @csrf
-                                      <input type="hidden" name="nombreTarjeta" value="{{$tarjeta['nombre']}}">
-                                      <input type="hidden" name="codigoTarjeta" value="{{$tarjeta['nroTarjeta']}}">
+                                      <input type="hidden" name="nombreTarjeta" value="">
+                                      <input type="hidden" name="codigoTarjeta" value="">
                                       <input type="hidden" name="totalCompra" value="{{ $total }}">
                                       <input type="hidden" name="subtotalCompra" value="{{ $subtotal }}">
                                       <input type="hidden" name="productosCarrito" value="{{ $productosCarrito }}">
@@ -188,6 +188,6 @@
             </div>
           </div>
       @endif
-  </div>  
+  </div>
 </div>
 @endsection
