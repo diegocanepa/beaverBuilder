@@ -118,7 +118,17 @@
             </div>
           </div>
         </div>
-
+        @if ($consulta === ' ')
+          <div class="alert alert-success text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Perfecto!</strong> Sus cambios se realizaron correctamente!
+          </div>
+        @else
+          <div class="alert alert-warning text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Ocurrio un error!</strong> {{$consulta}}!
+          </div>
+        @endif
         <div class="container">
                       <div class="row">
                         <div class="col-lg-12">

@@ -110,53 +110,68 @@ class ProductosController extends Controller
 
     public function listadoProductos()
     {
+        $consulta = ' ';
         $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
                                 ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
                                 ->Where('borrado', '=', 'N')
                                 ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
         $marcas = Marca::all();
         $categorias = Categoria::all();
-        $vac = compact('productos', 'marcas', 'categorias');
+        $vac = compact('productos', 'marcas', 'categorias', 'consulta');
         return view ('ABMProductos', $vac);
     }
 
 
     public function listadoProductosFiltro(Request $form)
     {
-      $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
-                           ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
-                           ->where('borrado','=','N');
-      if ($form['codigoProducto']) {
-        $productos = $productos->where('codigo','LIKE','%'.$form['codigoProducto'].'%');
+      $consulta = ' ';
+      try {
+        $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                             ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                             ->where('borrado','=','N');
+        if ($form['codigoProducto']) {
+          $productos = $productos->where('codigo','LIKE','%'.$form['codigoProducto'].'%');
+        }
+        if ($form['nombreProducto']) {
+          $productos = $productos->where('productos.nombre','LIKE','%'.$form['nombreProducto'].'%');
+        }
+        if ($form['precioDesde']) {
+          $productos = $productos->where('precio','>', $form['precioDesde']);
+        }
+        if ($form['precioHasta']) {
+          $productos = $productos->where('precio','<', $form['precioHasta']);
+        }
+        if ($form['marca'] != 0) {
+          $productos = $productos->where('Marca_idMarca','=',$form['marca']);
+        }
+        if ($form['categoria'] != 0) {
+          $productos = $productos->where('Categoria_idCategoria','=',$form['categoria']);
+        }
+
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
       }
-      if ($form['nombreProducto']) {
-        $productos = $productos->where('productos.nombre','LIKE','%'.$form['nombreProducto'].'%');
-      }
-      if ($form['precioDesde']) {
-        $productos = $productos->where('precio','>', $form['precioDesde']);
-      }
-      if ($form['precioHasta']) {
-        $productos = $productos->where('precio','<', $form['precioHasta']);
-      }
-      if ($form['marca'] != 0) {
-        $productos = $productos->where('Marca_idMarca','=',$form['marca']);
-      }
-      if ($form['categoria'] != 0) {
-        $productos = $productos->where('Categoria_idCategoria','=',$form['categoria']);
-      }
+
       $productos = $productos->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
       $marcas = Marca::all();
       $categorias = Categoria::all();
-      $vac = compact('productos', 'marcas', 'categorias');
+      $vac = compact('productos', 'marcas', 'categorias', 'consulta','form');
       return view ('ABMProductos', $vac);
     }
 
 
 
     public function eliminarProducto(Request $codigoProducto){
-      $producto = Producto::find($codigoProducto['idProducto']);
-      $producto->borrado = 'S';
-      $producto->save();
+      $consulta = ' ';
+      try {
+        $producto = Producto::find($codigoProducto['idProducto']);
+        $producto->borrado = 'S';
+        $producto->save();
+
+      } catch (\Exception $e) {
+        $consulta = false;
+      }
+
 
       // busca productos para mostrar
       $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
@@ -165,48 +180,39 @@ class ProductosController extends Controller
                               ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
       $marcas = Marca::all();
       $categorias = Categoria::all();
-      $vac = compact('productos', 'marcas', 'categorias');
+      $vac = compact('productos', 'marcas', 'categorias', 'consulta');
       return view ('ABMProductos', $vac);
     }
 
     public function modificarProducto(Request $datosProd){
-      $producto = Producto::find($datosProd['idProducto']);
-      $producto->nombre = $datosProd['nombre'];
-      $producto->imagen = $datosProd['imagen'];
-      $producto->descripcion = $datosProd['descripcion'];
-      $producto->precio = $datosProd['precio'];
-      $producto->Categoria_idCategoria = $datosProd['categoria'];
-      $producto->Marca_idMarca = $datosProd['marca'];
-      /*$producto->oferta = $datosProd['nombre*/
-      $producto->Stock = $datosProd['stock'];
-
-      $producto->save();
-
-
-      // busca productos para mostrar
-      $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
-                              ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
-                              ->Where('borrado', '=', 'N')
-                              ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
-      $marcas = Marca::all();
-      $categorias = Categoria::all();
-      $vac = compact('productos', 'marcas', 'categorias');
-      return view ('ABMProductos', $vac);
-    }
-
-    public function nuevoProducto(Request $datosProd){
-
-
-      $producto = Producto::where('codigo','=',$datosProd['codigo'])->get();
-      if ($producto->isEmpty()) {
+      $consulta = ' ';
+      try {
 
         if($_FILES['imagen']['error'] != 0){
-          dd('Hubo un error');
+          $consulta = 'Fijese si la imagen fue agregada correctamente';
+
+          $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                                  ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                                  ->Where('borrado', '=', 'N')
+                                  ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
+          $marcas = Marca::all();
+          $categorias = Categoria::all();
+          $vac = compact('productos', 'marcas', 'categorias', 'consulta');
+          return view ('ABMProductos', $vac);
         }
         else {
           $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
           if ($ext != 'jpg' &&  $ext != 'jpeg' && $ext != 'png') {
-            dd('formatoIncorrecto');
+            $consulta = 'El formato de la imagen no es el correcto';
+
+            $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                                    ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                                    ->Where('borrado', '=', 'N')
+                                    ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
+            $marcas = Marca::all();
+            $categorias = Categoria::all();
+            $vac = compact('productos', 'marcas', 'categorias', 'consulta');
+            return view ('ABMProductos', $vac);
           }
           else {
             $ubicacionArchivo = 'Imagenes/imagen'. $datosProd['codigo'] . '.'.$ext;
@@ -214,28 +220,23 @@ class ProductosController extends Controller
           }
         }
 
-        $producto = new Producto();
-        $producto->codigo = $datosProd['codigo'];
+        $producto = Producto::find($datosProd['idProducto']);
         $producto->nombre = $datosProd['nombre'];
-        $producto->imagen = $ubicacionArchivo;
+        $producto->imagen = $datosProd['imagen'];
         $producto->descripcion = $datosProd['descripcion'];
         $producto->precio = $datosProd['precio'];
         $producto->Categoria_idCategoria = $datosProd['categoria'];
         $producto->Marca_idMarca = $datosProd['marca'];
-
-        if ($datosProd['oferta'] = 'on') {
-          $producto->oferta = 'S';
-        }else {
-          $producto->oferta = 'N';
-        }
-
-        $producto->stock = $datosProd['stock'];
+        $producto->Stock = $datosProd['stock'];
+        $producto->imagen = $ubicacionArchivo;
 
         $producto->save();
 
-      }else {
-        dd('dfdfdfdfdfdfd');
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
       }
+
+
 
 
       // busca productos para mostrar
@@ -245,7 +246,86 @@ class ProductosController extends Controller
                               ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
       $marcas = Marca::all();
       $categorias = Categoria::all();
-      $vac = compact('productos', 'marcas', 'categorias');
+      $vac = compact('productos', 'marcas', 'categorias','consulta');
+      return view ('ABMProductos', $vac);
+    }
+
+    public function nuevoProducto(Request $datosProd){
+      $consulta = ' ';
+      try {
+        $producto = Producto::where('codigo','=',$datosProd['codigo'])->get();
+        if ($producto->isEmpty()) {
+
+          if($_FILES['imagen']['error'] != 0){
+            $consulta = 'Fijese si la imagen fue agregada correctamente';
+
+            $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                                    ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                                    ->Where('borrado', '=', 'N')
+                                    ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
+            $marcas = Marca::all();
+            $categorias = Categoria::all();
+            $vac = compact('productos', 'marcas', 'categorias', 'consulta');
+            return view ('ABMProductos', $vac);
+          }
+          else {
+            $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
+            if ($ext != 'jpg' &&  $ext != 'jpeg' && $ext != 'png') {
+              $consulta = 'El formato de la imagen no es el correcto';
+
+              $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                                      ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                                      ->Where('borrado', '=', 'N')
+                                      ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
+              $marcas = Marca::all();
+              $categorias = Categoria::all();
+              $vac = compact('productos', 'marcas', 'categorias', 'consulta');
+              return view ('ABMProductos', $vac);
+            }
+            else {
+              $ubicacionArchivo = 'Imagenes/imagen'. $datosProd['codigo'] . '.'.$ext;
+              move_uploaded_file($_FILES['imagen']['tmp_name'], $ubicacionArchivo);
+            }
+          }
+
+          $producto = new Producto();
+          $producto->codigo = $datosProd['codigo'];
+          $producto->nombre = $datosProd['nombre'];
+          $producto->imagen = $ubicacionArchivo;
+          $producto->descripcion = $datosProd['descripcion'];
+          $producto->precio = $datosProd['precio'];
+          $producto->Categoria_idCategoria = $datosProd['categoria'];
+          $producto->Marca_idMarca = $datosProd['marca'];
+
+          if ($datosProd['oferta'] = 'on') {
+            $producto->oferta = 'S';
+          }else {
+            $producto->oferta = 'N';
+          }
+
+          $producto->stock = $datosProd['stock'];
+
+          $producto->save();
+
+        }else {
+          // busca productos para mostrar
+          $consulta = 'El codigo de producto que trata de ingresar ya se existe!';
+        }
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
+      }
+
+
+
+
+      // busca productos para mostrar
+      $productos = Producto::Join('marca', 'productos.Marca_idMarca','=','marca.idMarca')
+                              ->Join('categoria', 'productos.Categoria_idCategoria','=','categoria.idCategoria')
+                              ->Where('borrado', '=', 'N')
+                              ->get(['productos.*', 'categoria.nombre AS nombreCategoria', 'marca.nombre AS nombreMarca']);
+      $marcas = Marca::all();
+      $categorias = Categoria::all();
+      $vac = compact('productos', 'marcas', 'categorias', 'consulta');
       return view ('ABMProductos', $vac);
     }
 
