@@ -105,7 +105,7 @@
                           </li>
                           <li class="nav-item">
                               <a class="nav-link" id="nav-li-carrito" href="{{ route ('carritoCompras') }}"><img id="carrito-compras-img" src="/Iconos/carrito-compras2.png" alt="">
-                                
+
                               </a>
                           </li>
                       </ul>
@@ -150,7 +150,7 @@
                                       <a class="tag-footer" href="">Pagos</a>
                                   </li>
                                   <li>
-                                      <a class="tag-footer" href="">Ofertas</a>
+                                      <a class="tag-footer" href="{{ route('productos') }}">Ofertas</a>
                                   </li>
                                   <li>
                                       <a class="tag-footer" href="">Lo mas vendido</a>
@@ -159,7 +159,7 @@
                                       <a class="tag-footer" href="">Novedades</a>
                                   </li>
                                   <li>
-                                      <a class="tag-footer" href="preguntas-frecuentes.php">Preguntas Precuentes</a>
+                                      <a class="tag-footer" href="">Preguntas Precuentes</a>
                                   </li>
                               </ul>
                           </div>
@@ -214,7 +214,7 @@
                                       <a class="tag-footer" href="">Novedades</a>
                                   </li>
                                   <li>
-                                      <a class="tag-footer" href="preguntas-frecuentes.php">Preguntas Precuentes</a>
+                                      <a class="tag-footer" href="{{ route ('faqs')}}">Preguntas Precuentes</a>
                                   </li>
                               </ul>
                           </div>

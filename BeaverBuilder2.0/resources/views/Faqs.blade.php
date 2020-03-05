@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<div class="body-preg">
 <!-- partial:index.partial.html -->
 <div class="container">
     <div class="row">
@@ -9,19 +10,19 @@
                     <i class="mdi mdi-help-circle"></i> Compras
                 </a>
                 <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false">
-                    <i class="mdi mdi-account"></i> Profile
+                    <i class="mdi mdi-account"></i> Pefil
                 </a>
                 <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3" aria-selected="false">
-                    <i class="mdi mdi-account-settings"></i> Account
+                    <i class="mdi mdi-account-settings"></i> Productos
                 </a>
                 <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4" aria-selected="false">
-                    <i class="mdi mdi-heart"></i> Favorites
+                    <i class="mdi mdi-heart"></i> Ofertas
                 </a>
                 <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5" aria-selected="false">
-                    <i class="mdi mdi-coin"></i> Transactions
+                    <i class="mdi mdi-coin"></i> Envios
                 </a>
                 <a href="#tab6" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6" aria-selected="false">
-                    <i class="mdi mdi-help"></i> General help
+                    <i class="mdi mdi-help"></i> Seguridad
                 </a>
             </div>
         </div>
@@ -363,7 +364,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="container p-0">  
+                <div class="container p-0">
   <form id="contact" action="" method="post">
     <h3>Colorlib Contact Form</h3>
     <h4>Contact us for custom quote</h4>
@@ -387,6 +388,7 @@
             </div>
         </div>
     </div>
-    
+
+</div>
 </div>
 @endsection
