@@ -43,10 +43,10 @@
                                 <a class="nav-link" id="nav-li" href="{{ route('productos') }}">Productos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="nav-li" href="home.php#about-services">Nosotros</a>
+                                <a class="nav-link" id="nav-li" href="http://127.0.0.1:8000#about">Nosotros</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="nav-li" href="home.php#footer-section">Contactanos</a>
+                                <a class="nav-link" id="nav-li" href="{{ route ('faqs')}}">Contactanos</a>
                             </li>
                         </ul>
                       <!-- Right Side Of Navbar -->
@@ -81,7 +81,7 @@
                                 <a class="nav-link" id="nav-li" href="home.php#about-services">Nosotros</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="nav-li" href="home.php#footer-section">Contactanos</a>
+                                <a class="nav-link" id="nav-li" href="{{ route ('faqs')}}">Contactanos</a>
                             </li>
                         </ul>
                       <!-- Right Side Of Navbar -->

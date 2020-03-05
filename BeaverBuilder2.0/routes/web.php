@@ -62,4 +62,4 @@ route::post('/eliminarTarjeta', 'PerfilUsuarioController@eliminarTarjeta')->name
 route::post('/agregarTarjeta', 'PerfilUsuarioController@agregarTarjeta')->name('agregarTarjeta');
 
 // FAQS
-Route::get("/faqs", function(){return view("Faqs");})->name("faqs");
+Route::get("/faqs", function(){return view("Faqs");})->name('faqs');
