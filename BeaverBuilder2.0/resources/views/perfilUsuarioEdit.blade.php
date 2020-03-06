@@ -7,7 +7,17 @@
         <div class="py-5 text-center">
           <h2>Perfil de Usuario</h2>
         </div>
-
+        @if ($consulta === ' ')
+          <div class="alert alert-success text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Perfecto!</strong> Sus cambios se realizaron correctamente!
+          </div>
+        @else
+          <div class="alert alert-warning text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Ocurrio un error!</strong> {{$consulta}}!
+          </div>
+        @endif
         <div class="container">
           <div class="col-12 text-center" >
 

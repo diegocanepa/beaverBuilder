@@ -110,6 +110,7 @@ class PerfilUsuarioController extends Controller
     }
 
     public function eliminarTarjeta(Request $request){
+      $consulta = ' ';
       $tarjeta = Tarjeta::find($request['id']);
       $tarjeta -> delete();
 
@@ -126,11 +127,12 @@ class PerfilUsuarioController extends Controller
       $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
       $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona', 'consulta');
       return view('perfilUsuarioEdit', $vac);
     }
 
     public function eliminarDireccion(Request $request){
+      $consulta = ' ';
       $direccion = Direccion::find($request['id']);
       $direccion->delete();
 
@@ -147,16 +149,129 @@ class PerfilUsuarioController extends Controller
       $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
       $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona', 'consulta');
       return view('perfilUsuarioEdit', $vac);
     }
 
     public function agregarDireccion(Request $request){
-      $direccion = Direccion::Where('calle', '=', $request['calle'])
-                              ->Where('numero', '=', $request['numero'])
-                              ->Where('users_id', '=', auth()->user()->id) ->exists();
-      if (!$direccion) {
-        $direccion = new Direccion();
+      $consulta = ' ';
+      try {
+        $direccion = Direccion::Where('calle', '=', $request['calle'])
+                                ->Where('numero', '=', $request['numero'])
+                                ->Where('users_id', '=', auth()->user()->id) ->exists();
+        if (!$direccion) {
+          $direccion = new Direccion();
+          $direccion->calle = $request['calle'];
+          $direccion->numero = $request['numero'];
+          $direccion->codigoPostal = $request['calcodigoPostal'];
+          $direccion->Ciudad_idCiudad = $request['idCiudad'];
+          $direccion->barrio = $request['barrio'];
+          $direccion->users_id = auth()->user()->id;
+          $direccion->save();
+        }else {
+          $consulta = 'La direccion que desea agregar ya existe para su usuario';
+        }
+
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
+      }
+
+
+
+
+      $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
+      $direcciones = Direccion::Join('ciudad', 'direccion.Ciudad_idCiudad', '=', 'ciudad.idCiudad')
+                                ->Join('provincia', 'ciudad.Provincia_idProvincia', '=', 'provincia.idProvincia')
+                                ->Join('pais', 'provincia.Pais_idPais', '=', 'pais.idPais')
+                                ->where('users_id','=', auth()->user()->id)
+                                ->where('borrado','=', 'N')->get();
+      $paises = Pais::all();
+      $provincias = Provincia::all();
+      $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
+      $ciudades = Ciudad::all();
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona', 'consulta');
+      return view('perfilUsuarioEdit', $vac);
+    }
+
+    public function agregarTarjeta(Request $request){
+      $consulta = ' ';
+      try {
+        $tarjeta = Tarjeta::where('nroTarjeta', '=',$request['nroTarjeta'])
+                            ->where('users_id', '=', auth()->user()->id)->exists();
+        if (!$tarjeta) {
+          $tarjeta = new Tarjeta();
+          $tarjeta->nroTarjeta = $request['nroTarjeta'];
+          $tarjeta->nombre = $request['nombre'];
+          $tarjeta->cvv = $request['cvv'];
+          $tarjeta->fechaVencimiento = $request['fechaVencimiento'];
+          $tarjeta->users_id = auth()->user()->id;
+          $tarjeta->save();
+        } else {
+          $consulta = 'La tarjeta que desea agregar ya existe para su usuario';
+        }
+
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
+      }
+
+
+
+
+      $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
+      $direcciones = Direccion::Join('ciudad', 'direccion.Ciudad_idCiudad', '=', 'ciudad.idCiudad')
+                                ->Join('provincia', 'ciudad.Provincia_idProvincia', '=', 'provincia.idProvincia')
+                                ->Join('pais', 'provincia.Pais_idPais', '=', 'pais.idPais')
+                                ->where('users_id','=', auth()->user()->id)
+                                ->where('borrado','=', 'N')->get();
+      $paises = Pais::all();
+      $provincias = Provincia::all();
+      $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
+      $ciudades = Ciudad::all();
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona', 'consulta');
+      return view('perfilUsuarioEdit', $vac);
+
+    }
+
+    public function editarTarjeta(Request $request){
+      $consulta = ' ';
+      try {
+        $tarjeta = Tarjeta::find($request['id']);
+        $tarjeta->nombre = $request['nombre'];
+        $tarjeta->cvv = $request['cvv'];
+        $tarjeta->fechaVencimiento = $request['fechaVencimiento'];
+        $tarjeta->users_id = auth()->user()->id;
+        $tarjeta->save();
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
+      }
+
+
+      $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
+      $direcciones = Direccion::Join('ciudad', 'direccion.Ciudad_idCiudad', '=', 'ciudad.idCiudad')
+                                ->Join('provincia', 'ciudad.Provincia_idProvincia', '=', 'provincia.idProvincia')
+                                ->Join('pais', 'provincia.Pais_idPais', '=', 'pais.idPais')
+                                ->where('users_id','=', auth()->user()->id)
+                                ->where('borrado','=', 'N')->get();
+      $paises = Pais::all();
+      $provincias = Provincia::all();
+      $documentos = TipoDocumento::all();
+      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
+      $rolPersona = Rol::find(auth()->user()->rol);
+      $ciudades = Ciudad::all();
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona', 'consulta');
+      return view('perfilUsuarioEdit', $vac);
+    }
+
+
+
+    public function editarDireccion(Request $request){
+      $consulta = ' ';
+      try {
+        $direccion = Direccion::find($request['id']);
         $direccion->calle = $request['calle'];
         $direccion->numero = $request['numero'];
         $direccion->codigoPostal = $request['calcodigoPostal'];
@@ -164,41 +279,11 @@ class PerfilUsuarioController extends Controller
         $direccion->barrio = $request['barrio'];
         $direccion->users_id = auth()->user()->id;
         $direccion->save();
-      }else {
-        dd('ya existe esta direccion');
+      } catch (\Exception $e) {
+        $consulta = 'Algo a pasado con nuestro servidor, intente mas tarde :(';
       }
 
 
-      $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
-      $direcciones = Direccion::Join('ciudad', 'direccion.Ciudad_idCiudad', '=', 'ciudad.idCiudad')
-                                ->Join('provincia', 'ciudad.Provincia_idProvincia', '=', 'provincia.idProvincia')
-                                ->Join('pais', 'provincia.Pais_idPais', '=', 'pais.idPais')
-                                ->where('users_id','=', auth()->user()->id)
-                                ->where('borrado','=', 'N')->get();
-      $paises = Pais::all();
-      $provincias = Provincia::all();
-      $documentos = TipoDocumento::all();
-      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
-      $rolPersona = Rol::find(auth()->user()->rol);
-      $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
-      return view('perfilUsuarioEdit', $vac);
-    }
-
-    public function agregarTarjeta(Request $request){
-      $tarjeta = Tarjeta::where('nroTarjeta', '=',$request['nroTarjeta'])
-                          ->where('users_id', '=', auth()->user()->id)->exists();
-      if (!$tarjeta) {
-        $tarjeta = new Tarjeta();
-        $tarjeta->nroTarjeta = $request['nroTarjeta'];
-        $tarjeta->nombre = $request['nombre'];
-        $tarjeta->cvv = $request['cvv'];
-        $tarjeta->fechaVencimiento = $request['fechaVencimiento'];
-        $tarjeta->users_id = auth()->user()->id;
-      } else {
-        dd('ya existe tarjeta');
-      }
-      $tarjeta->save();
 
 
       $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
@@ -213,62 +298,7 @@ class PerfilUsuarioController extends Controller
       $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
       $rolPersona = Rol::find(auth()->user()->rol);
       $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
-      return view('perfilUsuarioEdit', $vac);
-
-    }
-
-    public function editarTarjeta(Request $request){
-      $tarjeta = Tarjeta::find($request['id']);
-      $tarjeta->nombre = $request['nombre'];
-      $tarjeta->cvv = $request['cvv'];
-      $tarjeta->fechaVencimiento = $request['fechaVencimiento'];
-      $tarjeta->users_id = auth()->user()->id;
-      $tarjeta->save();
-
-
-      $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
-      $direcciones = Direccion::Join('ciudad', 'direccion.Ciudad_idCiudad', '=', 'ciudad.idCiudad')
-                                ->Join('provincia', 'ciudad.Provincia_idProvincia', '=', 'provincia.idProvincia')
-                                ->Join('pais', 'provincia.Pais_idPais', '=', 'pais.idPais')
-                                ->where('users_id','=', auth()->user()->id)
-                                ->where('borrado','=', 'N')->get();
-      $paises = Pais::all();
-      $provincias = Provincia::all();
-      $documentos = TipoDocumento::all();
-      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
-      $rolPersona = Rol::find(auth()->user()->rol);
-      $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
-      return view('perfilUsuarioEdit', $vac);
-    }
-
-
-
-    public function editarDireccion(Request $request){
-      $direccion = Direccion::find($request['id']);
-      $direccion->calle = $request['calle'];
-      $direccion->numero = $request['numero'];
-      $direccion->codigoPostal = $request['calcodigoPostal'];
-      $direccion->Ciudad_idCiudad = $request['idCiudad'];
-      $direccion->barrio = $request['barrio'];
-      $direccion->users_id = auth()->user()->id;
-      $direccion->save();
-
-
-      $tarjetas = Tarjeta::where('users_id','=', auth()->user()->id)->Where('borrado','=', 'N')->get();
-      $direcciones = Direccion::Join('ciudad', 'direccion.Ciudad_idCiudad', '=', 'ciudad.idCiudad')
-                                ->Join('provincia', 'ciudad.Provincia_idProvincia', '=', 'provincia.idProvincia')
-                                ->Join('pais', 'provincia.Pais_idPais', '=', 'pais.idPais')
-                                ->where('users_id','=', auth()->user()->id)
-                                ->where('borrado','=', 'N')->get();
-      $paises = Pais::all();
-      $provincias = Provincia::all();
-      $documentos = TipoDocumento::all();
-      $documentoPersona = TipoDocumento::find(auth()->user()->tipoDoc_idDoc);
-      $rolPersona = Rol::find(auth()->user()->rol);
-      $ciudades = Ciudad::all();
-      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona');
+      $vac = compact('tarjetas','direcciones', 'paises','provincias','ciudades', 'documentos', 'documentoPersona', 'rolPersona', 'consulta');
       return view('perfilUsuarioEdit', $vac);
 
     }
